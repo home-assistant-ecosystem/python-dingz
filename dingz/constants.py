@@ -25,7 +25,8 @@ LOG = "/log"
 FIRMWARE = "/load"
 
 SETTINGS = "settings"
-FRONT_LED = "led/get"
+FRONT_LED_GET = "led/get"
+FRONT_LED_SET = "led/set"
 BUTTON_ACTIONS = "action"
 
 # Configuration endpoints

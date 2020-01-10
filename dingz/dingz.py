@@ -5,7 +5,8 @@ import aiohttp
 from yarl import URL
 
 from . import _request as request
-from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT
+from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET
+from .exceptions import DingzError
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,6 +43,23 @@ class Dingz:
         response = await request(self, uri=url)
         self._intensity = response["intensity"]
         self._day = response["day"]
+
+    async def enabled(self) -> bool:
+        """Return true if front LED is on."""
+        url = URL(self.uri).join(URL(FRONT_LED_GET))
+        response = await request(self, uri=url)
+        return bool(response["on"])
+
+    async def turn_on(self) -> None:
+        """Enable/turn on the front LED."""
+        data = {"action": "on"}
+        url = URL(self.uri).join(URL(FRONT_LED_SET))
+        await request(self, uri=url, method="POST", data=data)
+
+    async def turn_off(self) -> None:
+        """Disable/turn off the front LED."""
+        url = URL(self.uri).join(URL(FRONT_LED_SET))
+        await request(self, uri=url, method="POST", data={"action": "off"})
 
     @property
     def device_details(self) -> str:

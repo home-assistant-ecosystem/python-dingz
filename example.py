@@ -18,6 +18,14 @@ async def main():
         await dingz.get_temperature()
         print("Temperature:", dingz.temperature)
 
+        # Turn on the front LED
+        print("Turning Front LED on...")
+        await dingz.turn_on()
+        await asyncio.sleep(3)
+        print("Front LED:", await dingz.enabled())
+        await dingz.turn_off()
+        print("Front LED:", await dingz.enabled())
+
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
