@@ -1,77 +1,58 @@
-"""A Python Client to interact with Dingz devices."""
+"""Base details for the dingz Python bindings."""
 import asyncio
-import logging
+import json
+import socket
+from typing import Any, Mapping, Optional
 
 import aiohttp
 import async_timeout
 
-from . import exceptions
-from .constants import TEMPERATURE, MOTION, LIGHT, PUCK, INFO
-
-_LOGGER = logging.getLogger(__name__)
+from .constants import TIMEOUT, USER_AGENT
+from .exceptions import DingzConnectionError, DingzError
 
 
-class Dingz:
-    """A class for handling the communication with a Dingz device."""
+async def _request(
+    self,
+    uri: str,
+    method: str = "GET",
+    data: Optional[Any] = None,
+    json_data: Optional[dict] = None,
+    params: Optional[Mapping[str, str]] = None,
+) -> Any:
+    """Handle a request to the dingz unit."""
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json, text/plain, */*",
+    }
 
-    def __init__(self, device, loop, session):
-        """Initialize the connection."""
-        self._loop = loop
-        self._session = session
-        self.token = None
-        self.device = device
-        self.data = None
+    if self._session is None:
+        self._session = aiohttp.ClientSession()
+        self._close_session = True
 
-    async def get_data(self, endpoint):
-        """Retrieve the data from a given endpoint."""
-        try:
-            with async_timeout.timeout(5, loop=self._loop):
-                response = await self._session.get(f"{endpoint}")
+    try:
+        with async_timeout.timeout(TIMEOUT):
+            response = await self._session.request(
+                method, uri, data=data, json=json_data, params=params, headers=headers,
+            )
+    except asyncio.TimeoutError as exception:
+        raise DingzConnectionError(
+            "Timeout occurred while connecting to dingz unit."
+        ) from exception
+    except (aiohttp.ClientError, socket.gaierror) as exception:
+        raise DingzConnectionError(
+            "Error occurred while communicating with dingz."
+        ) from exception
 
-            _LOGGER.debug("Response from Dingz device: %s", response.status)
-            self.data = await response.json()
-            _LOGGER.debug(self.data)
-        except (asyncio.TimeoutError, aiohttp.ClientError):
-            _LOGGER.error("Can not load data from Dingz device")
-            self.data = None
-            raise exceptions.DingzConnectionError()
+    content_type = response.headers.get("Content-Type", "")
+    if (response.status // 100) in [4, 5]:
+        contents = await response.read()
+        response.close()
 
-    @property
-    def info(self):
-        """Get the state of the motion sensor."""
-        data = await self.get_data(INFO)
-        return data['motion']
+        if content_type == "application/json":
+            raise DingzError(response.status, json.loads(contents.decode("utf8")))
+        raise DingzError(response.status, {"message": contents.decode("utf8")})
+    if "application/json" in content_type:
+        response_json = await response.json()
+        return response_json
 
-    @property
-    def puck(self):
-        """Get the state of the hardware."""
-        data = await self.get_data(PUCK)
-        if self.data is not None:
-            return {'firmware': data['fw']['version'], 'hardware': data['hw']['version']}
-
-    @property
-    def temperature(self):
-        """Get the temperature."""
-        data = await self.get_data(TEMPERATURE)
-        return round(data['temperature'], 2)
-
-    @property
-    def light(self):
-        """Get the brightness."""
-        data = await self.get_data(LIGHT)
-        return round(data['intensity'], 2)
-
-    @property
-    def day(self):
-        """Get the state if daytime or not."""
-        data = await self.get_data(LIGHT)
-        return data['day']
-
-    @property
-    def motion(self):
-        """Get the state of the motion sensor."""
-        data = await self.get_data(MOTION)
-        return data['motion']
-
-
-
+    return response.text
