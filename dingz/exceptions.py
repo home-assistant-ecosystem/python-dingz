@@ -1,8 +1,8 @@
-"""Exceptions for Dingz API client."""
+"""Exceptions for dingz API client."""
 
 
 class DingzError(Exception):
-    """General Dingz exception occurred."""
+    """General dingz exception occurred."""
 
     pass
 
