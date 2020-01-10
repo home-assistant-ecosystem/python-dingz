@@ -51,6 +51,7 @@ async def _request(
         if content_type == "application/json":
             raise DingzError(response.status, json.loads(contents.decode("utf8")))
         raise DingzError(response.status, {"message": contents.decode("utf8")})
+
     if "application/json" in content_type:
         response_json = await response.json()
         return response_json
