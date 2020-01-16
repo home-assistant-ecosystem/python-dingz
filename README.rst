@@ -13,7 +13,7 @@ to create this module which is the base for the integration into
 and are still providing hardware, valuable feedback and advice. Their
 continuous support make further development of this module possible.
 
-See [https://api.dingz.ch/](https://api.dings.ch/) for the API details.
+See `api.dingz.ch <https://api.dingz.ch/>`_ for the API details.
 
 Requirements
 ------------
