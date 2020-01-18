@@ -3,7 +3,7 @@ import asyncio
 
 from dingz.dingz import Dingz
 
-IP_ADDRESS = "192.168.0.103"
+IP_ADDRESS = "192.168.0.105"
 
 
 async def main():
