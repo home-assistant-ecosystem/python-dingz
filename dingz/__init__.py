@@ -7,23 +7,28 @@ from typing import Any, Mapping, Optional
 import aiohttp
 import async_timeout
 
-from .constants import TIMEOUT, USER_AGENT
+from .constants import TIMEOUT, USER_AGENT, CONTENT_TYPE_JSON, CONTENT_TYPE, CONTENT_TYPE_TEXT_PLAIN
 from .exceptions import DingzConnectionError, DingzError
 
 
-async def _request(
+async def make_call(
     self,
     uri: str,
     method: str = "GET",
     data: Optional[Any] = None,
     json_data: Optional[dict] = None,
-    params: Optional[Mapping[str, str]] = None,
+    parameters: Optional[Mapping[str, str]] = None,
+    token: str = None,
 ) -> Any:
-    """Handle a request to the dingz unit."""
+    """Handle the requests to the dingz unit."""
+
     headers = {
         "User-Agent": USER_AGENT,
-        "Accept": "application/json, text/plain, */*",
+        "Accept": f"{CONTENT_TYPE_JSON}, {CONTENT_TYPE_TEXT_PLAIN}, */*",
     }
+
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
 
     if self._session is None:
         self._session = aiohttp.ClientSession()
@@ -32,27 +37,14 @@ async def _request(
     try:
         with async_timeout.timeout(TIMEOUT):
             response = await self._session.request(
-                method, uri, data=data, json=json_data, params=params, headers=headers,
+                method, uri, data=data, json=json_data, params=parameters, headers=headers,
             )
     except asyncio.TimeoutError as exception:
-        raise DingzConnectionError(
-            "Timeout occurred while connecting to dingz unit."
-        ) from exception
+        raise DingzConnectionError("Timeout occurred while connecting to dingz unit") from exception
     except (aiohttp.ClientError, socket.gaierror) as exception:
-        raise DingzConnectionError(
-            "Error occurred while communicating with dingz."
-        ) from exception
+        raise DingzConnectionError("Error occurred while communicating with dingz") from exception
 
-    content_type = response.headers.get("Content-Type", "")
-    if (response.status // 100) in [4, 5]:
-        contents = await response.read()
-        response.close()
-
-        if content_type == "application/json":
-            raise DingzError(response.status, json.loads(contents.decode("utf8")))
-        raise DingzError(response.status, {"message": contents.decode("utf8")})
-
-    if "application/json" in content_type:
+    if CONTENT_TYPE_JSON in response.headers.get(CONTENT_TYPE, ""):
         response_json = await response.json()
         return response_json
 

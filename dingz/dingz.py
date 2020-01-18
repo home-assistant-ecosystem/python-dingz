@@ -4,7 +4,7 @@ import logging
 import aiohttp
 from yarl import URL
 
-from . import _request as request
+from . import make_call
 from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET
 from .exceptions import DingzError
 
@@ -28,38 +28,38 @@ class Dingz:
     async def get_device_info(self) -> None:
         """Get the details from the dingz."""
         url = URL(self.uri).join(URL(DEVICE_INFO))
-        response = await request(self, uri=url)
+        response = await make_call(self, uri=url)
         self._device_details = response
 
     async def get_temperature(self) -> None:
         """Get the room temperature from the dingz."""
         url = URL(self.uri).join(URL(TEMPERATURE))
-        response = await request(self, uri=url)
+        response = await make_call(self, uri=url)
         self._temperature = response["temperature"]
 
     async def get_light(self) -> None:
         """Get the light details from the switch."""
         url = URL(self.uri).join(URL(LIGHT))
-        response = await request(self, uri=url)
+        response = await make_call(self, uri=url)
         self._intensity = response["intensity"]
         self._day = response["day"]
 
     async def enabled(self) -> bool:
         """Return true if front LED is on."""
         url = URL(self.uri).join(URL(FRONT_LED_GET))
-        response = await request(self, uri=url)
+        response = await make_call(self, uri=url)
         return bool(response["on"])
 
     async def turn_on(self) -> None:
         """Enable/turn on the front LED."""
         data = {"action": "on"}
         url = URL(self.uri).join(URL(FRONT_LED_SET))
-        await request(self, uri=url, method="POST", data=data)
+        await make_call(self, uri=url, method="POST", data=data)
 
     async def turn_off(self) -> None:
         """Disable/turn off the front LED."""
         url = URL(self.uri).join(URL(FRONT_LED_SET))
-        await request(self, uri=url, method="POST", data={"action": "off"})
+        await make_call(self, uri=url, method="POST", data={"action": "off"})
 
     @property
     def device_details(self) -> str:
@@ -81,6 +81,8 @@ class Dingz:
         """Return the current light intensity in lux."""
         return round(self._intensity, 1)
 
+    # See "Using Asyncio in Python" by Caleb Hattingh for implementation
+    # details.
     async def close(self) -> None:
         """Close an open client session."""
         if self._session and self._close_session:

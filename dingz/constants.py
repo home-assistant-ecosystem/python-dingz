@@ -33,3 +33,8 @@ BUTTON_ACTIONS = "action"
 PIR_CONFIGURATION = "pir_config"
 THERMOSTAT_CONFIGURATION = "thermostat_config"
 INPUT_CONFIGURATION = "input_config"
+
+# Communication constants
+CONTENT_TYPE_JSON = "application/json"
+CONTENT_TYPE = 'Content-Type'
+CONTENT_TYPE_TEXT_PLAIN = "text/plain"
