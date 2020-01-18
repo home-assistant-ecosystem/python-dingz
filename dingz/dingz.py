@@ -6,7 +6,6 @@ from yarl import URL
 
 from . import make_call
 from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET
-from .exceptions import DingzError
 
 _LOGGER = logging.getLogger(__name__)
 
