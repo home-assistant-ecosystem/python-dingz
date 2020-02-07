@@ -5,7 +5,20 @@ import aiohttp
 from yarl import URL
 
 from . import make_call
-from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET, PUCK, SETTINGS, PIR_CONFIGURATION, THERMOSTAT_CONFIGURATION, INPUT_CONFIGURATION, BUTTON_ACTIONS
+from .constants import (
+    API,
+    BUTTON_ACTIONS,
+    DEVICE_INFO,
+    FRONT_LED_GET,
+    FRONT_LED_SET,
+    INPUT_CONFIGURATION,
+    LIGHT,
+    PIR_CONFIGURATION,
+    PUCK,
+    SETTINGS,
+    TEMPERATURE,
+    THERMOSTAT_CONFIGURATION,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +46,15 @@ class Dingz:
 
     async def get_info(self) -> None:
         """Get everything from the dingz unit."""
-        for endpoint in [PUCK, DEVICE_INFO, SETTINGS, PIR_CONFIGURATION, THERMOSTAT_CONFIGURATION, INPUT_CONFIGURATION, BUTTON_ACTIONS]:
+        for endpoint in [
+            PUCK,
+            DEVICE_INFO,
+            SETTINGS,
+            PIR_CONFIGURATION,
+            THERMOSTAT_CONFIGURATION,
+            INPUT_CONFIGURATION,
+            BUTTON_ACTIONS,
+        ]:
             url = URL(self.uri).join(URL(endpoint))
             self._catch_all[endpoint] = await make_call(self, uri=url)
 
