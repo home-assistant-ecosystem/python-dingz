@@ -33,6 +33,7 @@ class Dingz:
         self._session = session
         self._device_details = None
         self._catch_all = {}
+        self._button_action = None
         self._temperature = None
         self._intensity = None
         self._day = None
@@ -63,6 +64,11 @@ class Dingz:
         url = URL(self.uri).join(URL(TEMPERATURE))
         response = await make_call(self, uri=url)
         self._temperature = response["temperature"]
+
+    async def get_button_action(self) -> None:
+        """Get the room temperature from the dingz."""
+        url = URL(self.uri).join(URL(BUTTON_ACTIONS))
+        self._button_action = await make_call(self, uri=url)
 
     async def get_light(self) -> None:
         """Get the light details from the switch."""
@@ -97,6 +103,11 @@ class Dingz:
     def everything(self) -> str:
         """Return the all available device details."""
         return self._catch_all
+
+    @property
+    def button_action(self) -> float:
+        """Return the current button action."""
+        return self._button_action
 
     @property
     def temperature(self) -> float:
