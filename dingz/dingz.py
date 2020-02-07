@@ -5,7 +5,7 @@ import aiohttp
 from yarl import URL
 
 from . import make_call
-from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET
+from .constants import API, DEVICE_INFO, TEMPERATURE, LIGHT, FRONT_LED_GET, FRONT_LED_SET, PUCK, SETTINGS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,6 +19,7 @@ class Dingz:
         self._host = host
         self._session = session
         self._device_details = None
+        self._catch_all = {}
         self._temperature = None
         self._intensity = None
         self._day = None
@@ -29,6 +30,12 @@ class Dingz:
         url = URL(self.uri).join(URL(DEVICE_INFO))
         response = await make_call(self, uri=url)
         self._device_details = response
+
+    async def get_info(self) -> None:
+        """Get everything from the dingz unit."""
+        for endpoint in [PUCK, DEVICE_INFO, SETTINGS]:
+            url = URL(self.uri).join(URL(endpoint))
+            self._catch_all[endpoint] = await make_call(self, uri=url)
 
     async def get_temperature(self) -> None:
         """Get the room temperature from the dingz."""
@@ -64,6 +71,11 @@ class Dingz:
     def device_details(self) -> str:
         """Return the current device details."""
         return self._device_details
+
+    @property
+    def everything(self) -> str:
+        """Return the all available device details."""
+        return self._catch_all
 
     @property
     def temperature(self) -> float:
