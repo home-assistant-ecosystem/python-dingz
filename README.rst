@@ -24,6 +24,9 @@ You need to have `Python 3 <https://www.python.org>`_ installed.
 - Network connection
 - Devices connected to your network
 
+You need to know the IP address of the devices. Please consult your router
+documentation to get this information.
+
 Installation
 ------------
 
@@ -32,6 +35,11 @@ The package is available in the `Python Package Index <https://pypi.python.org/>
 .. code:: bash
 
     $ pip install dingz
+
+Usage
+-----
+
+Every unit has its own web interface: `http://IP_ADDRESS <http://IP_ADDRESS>`_
 
 License
 -------
