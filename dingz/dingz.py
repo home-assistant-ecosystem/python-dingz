@@ -39,6 +39,7 @@ class Dingz:
         self._day = None
         self._night = None
         self._hour_of_day = None
+        self._motion = None
         self.uri = URL.build(scheme="http", host=self._host).join(URL(API))
 
     async def get_device_info(self) -> None:
@@ -76,7 +77,6 @@ class Dingz:
         """Get the light details from the switch."""
         url = URL(self.uri).join(URL(LIGHT))
         response = await make_call(self, uri=url)
-        print(response)
         self._intensity = response["intensity"]
         self._hour_of_day = response["state"]
 
@@ -117,6 +117,11 @@ class Dingz:
     def temperature(self) -> float:
         """Return the current temperature in celsius."""
         return round(self._temperature, 1)
+
+    @property
+    def motion(self) -> bool:
+        """Return true if the sensor is detecting motion."""
+        return None
 
     @property
     def day(self) -> bool:
