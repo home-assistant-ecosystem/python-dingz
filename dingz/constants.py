@@ -28,6 +28,7 @@ SETTINGS = "settings"
 FRONT_LED_GET = "led/get"
 FRONT_LED_SET = "led/set"
 BUTTON_ACTIONS = "action"
+WIFI_SCAN = "scan"
 
 # Configuration endpoints
 PIR_CONFIGURATION = "pir_config"

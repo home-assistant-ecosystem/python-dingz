@@ -18,6 +18,7 @@ from .constants import (
     SETTINGS,
     TEMPERATURE,
     THERMOSTAT_CONFIGURATION,
+    WIFI_SCAN,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,6 +33,7 @@ class Dingz:
         self._host = host
         self._session = session
         self._device_details = None
+        self._wifi_networks = None
         self._settings = None
         self._catch_all = {}
         self._button_action = None
@@ -67,6 +69,11 @@ class Dingz:
         """Get the settings from the dingz."""
         url = URL(self.uri).join(URL(SETTINGS))
         self._settings = await make_call(self, uri=url)
+
+    async def get_wifi_networks(self) -> None:
+        """Get the Wifi networks in range."""
+        url = URL(self.uri).join(URL(WIFI_SCAN))
+        self._wifi_networks = await make_call(self, uri=url)
 
     async def get_temperature(self) -> None:
         """Get the room temperature from the dingz."""
@@ -113,6 +120,11 @@ class Dingz:
     def settings(self) -> str:
         """Return the current device settings."""
         return self._settings
+
+    @property
+    def wifi_networks(self) -> str:
+        """Return the WiFi networks in range."""
+        return self._wifi_networks
 
     @property
     def everything(self) -> str:
