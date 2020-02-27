@@ -75,6 +75,17 @@ class Dingz:
         url = URL(self.uri).join(URL(WIFI_SCAN))
         self._wifi_networks = await make_call(self, uri=url)
 
+    async def get_configuration(self, part) -> None:
+        """Get the configuration of a dingz part."""
+        urls = {
+            "pir": PIR_CONFIGURATION,
+            "thermostat": THERMOSTAT_CONFIGURATION,
+            "input": INPUT_CONFIGURATION,
+        }
+        url_part = [value for key, value in urls.items() if part in key][0]
+        url = URL(self.uri).join(URL(url_part))
+        self._configuration = await make_call(self, uri=url)
+
     async def get_temperature(self) -> None:
         """Get the room temperature from the dingz."""
         url = URL(self.uri).join(URL(TEMPERATURE))
@@ -120,6 +131,11 @@ class Dingz:
     def settings(self) -> str:
         """Return the current device settings."""
         return self._settings
+
+    @property
+    def configuration(self) -> str:
+        """Return the current configuration of a dingz part."""
+        return self._configuration
 
     @property
     def wifi_networks(self) -> str:
