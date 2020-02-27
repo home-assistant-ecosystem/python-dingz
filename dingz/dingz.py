@@ -91,8 +91,9 @@ class Dingz:
 
     async def turn_off(self) -> None:
         """Disable/turn off the front LED."""
+        data = {"action": "off"}
         url = URL(self.uri).join(URL(FRONT_LED_SET))
-        await make_call(self, uri=url, method="POST", data={"action": "off"})
+        await make_call(self, uri=url, method="POST", data=data)
 
     @property
     def device_details(self) -> str:
