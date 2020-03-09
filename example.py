@@ -3,7 +3,7 @@ import asyncio
 
 from dingz.dingz import Dingz
 
-IP_ADDRESS = "192.168.0.105"
+IP_ADDRESS = "192.168.0.103"
 
 
 async def main():
@@ -14,11 +14,33 @@ async def main():
         await dingz.get_device_info()
         print("Device details:", dingz.device_details)
 
+        # Get all details
+        await dingz.get_settings()
+        print("All device details:", dingz.settings)
+
+        # Get the configuration
+        # Available: pir, input, themostat
+        await dingz.get_configuration("pir")
+        print("Configuration:", dingz.configuration)
+
         # Get the temperature
         await dingz.get_temperature()
         print("Temperature:", dingz.temperature)
 
-        # Turn on the front LED
+        # Get data from the PIR
+        await dingz.get_light()
+        print("Brightness:", dingz.intensity)
+        # Is it day?
+        print("Day?:", dingz.day)
+        # Motion detected
+        print("Motion?:", dingz.motion)
+
+        # Collect the data of the current state
+        await dingz.get_button_action()
+        print("Button actions:", dingz.button_action)
+
+
+        # # Turn on the front LED
         print("Turning Front LED on...")
         await dingz.turn_on()
         await asyncio.sleep(3)
