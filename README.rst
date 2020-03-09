@@ -18,7 +18,8 @@ See `api.dingz.ch <https://api.dingz.ch/>`_ for the API details.
 Limitations
 -----------
 
-This module is at the moment limited to consuming sensor data and states.
+This module is at the moment limited to consuming sensor data, device details,
+device configurations and states.
 The front LED can be controlled but buttons requires you to programm them by
 yourself.
 
