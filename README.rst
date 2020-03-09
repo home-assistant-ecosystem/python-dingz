@@ -15,6 +15,15 @@ continuous support make further development of this module possible.
 
 See `api.dingz.ch <https://api.dingz.ch/>`_ for the API details.
 
+Limitations
+-----------
+
+This module is at the moment limited to consuming sensor data and states.
+The front LED can be controlled but buttons requires you to programm them by
+yourself.
+
+No support for setting timers and schedules.
+
 Requirements
 ------------
 
