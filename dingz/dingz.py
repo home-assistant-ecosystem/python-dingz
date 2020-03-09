@@ -1,6 +1,6 @@
 """A Python Client to interact with Dingz devices."""
 import logging
-
+import json
 import aiohttp
 from yarl import URL
 
@@ -135,6 +135,12 @@ class Dingz:
         data = {"action": "off"}
         url = URL(self.uri).join(URL(FRONT_LED_SET))
         await make_call(self, uri=url, method="POST", data=data)
+
+    async def set_timer(self, data) -> None:
+        """Set a timer."""
+        print(data)
+        url = URL(self.uri).join(URL(TIMER))
+        await make_call(self, uri=url, method="POST", json_data=data)
 
     @property
     def device_details(self) -> str:
