@@ -46,6 +46,7 @@ class Dingz:
         self._hour_of_day = None
         self._motion = None
         self._schedule = None
+        self._timer = None
         self.uri = URL.build(scheme="http", host=self._host).join(URL(API))
 
     async def get_device_info(self) -> None:
@@ -79,9 +80,14 @@ class Dingz:
         self._wifi_networks = await make_call(self, uri=url)
 
     async def get_schedule(self) -> None:
-        """Get the avaialble schedules."""
+        """Get the available schedules."""
         url = URL(self.uri).join(URL(SCHEDULE))
         self._schedule = await make_call(self, uri=url)
+
+    async def get_timer(self) -> None:
+        """Get the available timers."""
+        url = URL(self.uri).join(URL(TIMER))
+        self._timer = await make_call(self, uri=url)
 
     async def get_configuration(self, part) -> None:
         """Get the configuration of a dingz part."""
@@ -144,6 +150,11 @@ class Dingz:
     def schedule(self) -> str:
         """Return the schedule details."""
         return self._schedule
+
+    @property
+    def timer(self) -> str:
+        """Return the timer details."""
+        return self._timer
 
     @property
     def configuration(self) -> str:
