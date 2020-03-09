@@ -83,8 +83,6 @@ class Dingz:
             "pir": PIR_CONFIGURATION,
             "thermostat": THERMOSTAT_CONFIGURATION,
             "input": INPUT_CONFIGURATION,
-            "timer": TIMER,
-            "schedule": SCHEDULE,
         }
         url_part = [value for key, value in urls.items() if part in key][0]
         url = URL(self.uri).join(URL(url_part))
