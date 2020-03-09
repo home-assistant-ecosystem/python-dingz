@@ -19,6 +19,8 @@ from .constants import (
     TEMPERATURE,
     THERMOSTAT_CONFIGURATION,
     WIFI_SCAN,
+    TIMER,
+    SCHEDULE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -81,6 +83,8 @@ class Dingz:
             "pir": PIR_CONFIGURATION,
             "thermostat": THERMOSTAT_CONFIGURATION,
             "input": INPUT_CONFIGURATION,
+            "timer": TIMER,
+            "schedule": SCHEDULE,
         }
         url_part = [value for key, value in urls.items() if part in key][0]
         url = URL(self.uri).join(URL(url_part))

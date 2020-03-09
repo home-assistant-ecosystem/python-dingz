@@ -19,7 +19,7 @@ async def main():
         print("All device details:", dingz.settings)
 
         # Get the configuration
-        # Available: pir, input, themostat
+        # Available: pir, input, themostat, timer, schedule
         await dingz.get_configuration("pir")
         print("Configuration:", dingz.configuration)
 

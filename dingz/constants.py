@@ -19,6 +19,8 @@ DIMMER = "dimmer"
 MOTION = "motion"
 DEVICE_INFO = "device"
 LIGHT = "light"
+SCHEDULE = "schedule"
+TIMER = "timer"
 
 # Special endpoints
 LOG = "/log"
