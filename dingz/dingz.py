@@ -138,8 +138,14 @@ class Dingz:
 
     async def set_timer(self, data) -> None:
         """Set a timer."""
+        print(data)
         url = URL(self.uri).join(URL(TIMER))
         await make_call(self, uri=url, method="POST", json_data=data)
+
+    async def stop_timer(self, data) -> None:
+        """Stop a timer."""
+        url = URL(self.uri).join(URL(TIMER))
+        await make_call(self, uri=url, method="POST", data=data)
 
     @property
     def device_details(self) -> str:
