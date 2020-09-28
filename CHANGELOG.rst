@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.3.0 (2020-09-28)
+
+- Support for Shades/Blinds
+- Access to more parts of the Dingz API
+  (Blind Config, System Config and others)
+- Automatic discovery for Dingz units in the local network
+
 0.2.0 (2020-05-20)
 ------------------
 
