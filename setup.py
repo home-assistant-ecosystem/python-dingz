@@ -19,7 +19,7 @@ setup(
     version="0.4.0.dev1",
     description="Python API for interacting with Dingz devices",
     long_description=long_description,
-    url="https://github.com/fabaff/python-dingz",
+    url="https://github.com/home-assistant-ecosystem/python-dingz",
     author="Fabian Affolter",
     author_email="fabian@affolter-engineering.ch",
     license="Apache License 2.0",
