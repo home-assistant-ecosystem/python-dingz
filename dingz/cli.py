@@ -1,11 +1,12 @@
 """Command-line interface to interact with dingz devices."""
-import click
-from .discovery import discover_dingz_devices
-import asyncio
-
-
 import asyncio
 from functools import wraps
+
+import click
+
+from dingz.dingz import Dingz
+
+from .discovery import discover_dingz_devices
 
 
 def coro(f):
@@ -38,6 +39,22 @@ async def discover():
             f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}"
         )
 
+@main.group("info")
+def info():
+    """Get the information of a dingz device."""
+
+
+@info.command("read")
+@coro
+@click.option(
+    "--ip", prompt="IP address of the device", help="IP address of the device."
+)
+async def get_config(ip):
+    """Read the current configuration of a myStrom device."""
+    click.echo("Read configuration from %s" % ip)
+    async with Dingz(ip) as dingz:
+        await dingz.get_device_info()
+        click.echo(dingz.device_details)
 
 if __name__ == "__main__":
     main()
