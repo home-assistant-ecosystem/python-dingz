@@ -39,6 +39,7 @@ async def discover():
             f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}"
         )
 
+
 @main.group("info")
 def info():
     """Get the information of a dingz device."""
@@ -55,6 +56,34 @@ async def get_config(ip):
     async with Dingz(ip) as dingz:
         await dingz.get_device_info()
         click.echo(dingz.device_details)
+
+
+@main.group("front_led")
+def front_led():
+    """Handle the front LED of dingz."""
+
+
+@front_led.command("on")
+@coro
+@click.option(
+    "--ip", prompt="IP address of the device", help="IP address of the device."
+)
+async def set_on(ip):
+    """Turn the front LED on."""
+    async with Dingz(ip) as dingz:
+        await dingz.turn_on()
+
+
+@front_led.command("off")
+@coro
+@click.option(
+    "--ip", prompt="IP address of the device", help="IP address of the device."
+)
+async def set_off(ip):
+    """Turn the front LED off."""
+    async with Dingz(ip) as dingz:
+        await dingz.turn_off()
+
 
 if __name__ == "__main__":
     main()
