@@ -85,5 +85,16 @@ async def set_off(ip):
         await dingz.turn_off()
 
 
+@front_led.command("status")
+@coro
+@click.option(
+    "--ip", prompt="IP address of the device", help="IP address of the device."
+)
+async def get_status(ip):
+    """Get the status of the front LED off."""
+    async with Dingz(ip) as dingz:
+        click.echo(await dingz.enabled())
+
+
 if __name__ == "__main__":
     main()
