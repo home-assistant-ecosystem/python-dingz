@@ -1,4 +1,4 @@
-"""A Python Client to interact with Dingz devices."""
+"""Python client/wrapper to interact with dingz devices."""
 import logging
 import json
 import aiohttp
