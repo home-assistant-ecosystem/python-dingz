@@ -4,10 +4,10 @@ Changelog
 0.3.0 (--)
 ----------
 
-- Support for Shades/Blinds (@retoo)
-- Access to more parts of the Dingz API
-  (Blind Config, System Config and others) (@retoo)
-- Automatic discovery for Dingz units in the local network (@retoo)
+- Add CLI tool
+- Support for shades/blinds (@retoo)
+- Access to more parts of the dingz API (blind config, system config and others) (@retoo)
+- Automatic discovery for dDingz units in the local network (@retoo)
 
 0.2.0 (2020-05-20)
 ------------------
