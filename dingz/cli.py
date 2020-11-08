@@ -44,7 +44,7 @@ def info():
     """Get the information of a dingz device."""
 
 
-@info.command("read")
+@info.command("config")
 @coro
 @click.option(
     "--ip", prompt="IP address of the device", help="IP address of the device."
