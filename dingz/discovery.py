@@ -3,6 +3,8 @@ import asyncio
 import logging
 from typing import Optional, List
 
+from .constants import DEVICE_MAPPING
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -25,6 +27,10 @@ class DiscoveredDevice(object):
 
         device = DiscoveredDevice(host=raw_addr[0], mac=announce_msg[0:6].hex(":"))
         device.type = announce_msg[6]
+        try:
+            device.hardware = DEVICE_MAPPING[str(announce_msg[6])]
+        except KeyError:
+            device.hardware = "unknown"
         status = announce_msg[7]
 
         # Parse status field

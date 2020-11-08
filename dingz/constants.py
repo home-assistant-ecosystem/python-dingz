@@ -43,5 +43,10 @@ INPUT_CONFIGURATION = "input_config"
 
 # Communication constants
 CONTENT_TYPE_JSON = "application/json"
-CONTENT_TYPE = 'Content-Type'
+CONTENT_TYPE = "Content-Type"
 CONTENT_TYPE_TEXT_PLAIN = "text/plain"
+
+DEVICE_MAPPING = {
+    "102": "myStrom Bulb",
+    "108": "dingz",
+}
