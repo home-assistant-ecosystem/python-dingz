@@ -16,7 +16,7 @@ if sys.argv[-1] == "publish":
 
 setup(
     name="python-dingz",
-    version="0.3.0-dev1",
+    version="0.3.0",
     description="Python API for interacting with Dingz devices",
     long_description=long_description,
     url="https://github.com/fabaff/python-dingz",
