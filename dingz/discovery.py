@@ -1,3 +1,4 @@
+"""Discover Dingz devices in a network."""
 import asyncio
 import logging
 from typing import Optional, List
@@ -6,6 +7,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class DiscoveredDevice(object):
+    """Representation of discovered device."""
     mac: str
     type: int
     is_child: bool
@@ -15,9 +17,10 @@ class DiscoveredDevice(object):
 
     @staticmethod
     def create_from_announce_msg(raw_addr, announce_msg):
-        _LOGGER.debug("received announce msg '%s' from %s ", announce_msg, raw_addr)
+        """Create announce message."""
+        _LOGGER.debug("Received announce message '%s' from %s ", announce_msg, raw_addr)
         if len(announce_msg) != 8:
-            raise RuntimeError("unexpected announcement, '%s'" % announce_msg)
+            raise RuntimeError("Unexpected announcement, '%s'" % announce_msg)
 
         device = DiscoveredDevice(host=raw_addr[0], mac=announce_msg[0:6].hex(":"))
         device.type = announce_msg[6]
@@ -31,43 +34,54 @@ class DiscoveredDevice(object):
         return device
 
     def __init__(self, host, mac):
+        """Initialize the """
         self.host = host
         self.mac = mac
 
 
 class DeviceRegistry(object):
+    """Representation of the device registry."""
+
     def __init__(self):
+        """Initialize the device registry."""
         self.devices_by_mac = {}
 
     def register(self, device):
+        """Register a device."""
         self.devices_by_mac[device.mac] = device
 
     def devices(self):
+        """Get all present devices"""
         return list(self.devices_by_mac.values())
 
 
 class DiscoveryProtocol(asyncio.DatagramProtocol):
+    """Representation of the discovery protocol."""
     def __init__(self, registry: DeviceRegistry):
+        """"Initialize the discovery protocol."""
         super().__init__()
         self.registry = registry
 
     def connection_made(self, transport):
-        _LOGGER.debug("starting up udp listener")
+        """Create an UDP listener."""
+        _LOGGER.debug("Starting up UDP listener")
         self.transport = transport
 
     def datagram_received(self, data, addr):
+        """Handle a datagram."""
         device = DiscoveredDevice.create_from_announce_msg(addr, data)
         self.registry.register(device)
 
     def connection_lost(self, exc: Optional[Exception]) -> None:
-        _LOGGER.debug("shutting down udp listener")
+        """Stop if connection is lost."""
+        _LOGGER.debug("Shutting down UDP listener")
         super().connection_lost(exc)
 
 
 async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
     """
     Try to discover all local dingz instances. All dingz instances
-    report their presence every ~5 seconds in a UDP broadcast to port 7979.
+    report their presence every ~5 seconds in an UDP broadcast to port 7979.
 
     :param timeout: timeout in seconds for discover.
     :return: list of discovered devices
@@ -77,16 +91,16 @@ async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
     (transport, protocol) = await loop.create_datagram_endpoint(
         lambda: DiscoveryProtocol(registry), local_addr=("0.0.0.0", 7979)
     )
-    # server runs in the background, meanwhile wait until timeout expires
+    # Server runs in the background, meanwhile wait until timeout expires
     await asyncio.sleep(timeout)
 
-    # shutdown server
+    # Shutdown server
     transport.close()
 
     devices = registry.devices()
     for device in devices:
         _LOGGER.debug(
-            "discovered dingz %s (%s) with mac %s", device.host, device.type, device.mac
+            "Discovered dingz %s (%s) with mac %s", device.host, device.type, device.mac
         )
     return devices
 
