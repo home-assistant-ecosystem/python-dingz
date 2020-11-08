@@ -8,6 +8,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class DiscoveredDevice(object):
     """Representation of discovered device."""
+
     mac: str
     type: int
     is_child: bool
@@ -26,7 +27,7 @@ class DiscoveredDevice(object):
         device.type = announce_msg[6]
         status = announce_msg[7]
 
-        # parse status field
+        # Parse status field
         device.is_child = status & 1 != 0
         device.mystrom_registered = status & 2 != 0
         device.mystrom_online = status & 4 != 0
@@ -34,7 +35,7 @@ class DiscoveredDevice(object):
         return device
 
     def __init__(self, host, mac):
-        """Initialize the """
+        """Initialize the discovery."""
         self.host = host
         self.mac = mac
 
@@ -57,6 +58,7 @@ class DeviceRegistry(object):
 
 class DiscoveryProtocol(asyncio.DatagramProtocol):
     """Representation of the discovery protocol."""
+
     def __init__(self, registry: DeviceRegistry):
         """"Initialize the discovery protocol."""
         super().__init__()
@@ -103,13 +105,3 @@ async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
             "Discovered dingz %s (%s) with mac %s", device.host, device.type, device.mac
         )
     return devices
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    loop = asyncio.get_event_loop()
-    devices = asyncio.run(discover_dingz_devices())
-
-    print("found %s devices" % len(devices))
-    for device in devices:
-        print(f"{device.mac} {device.host}")
