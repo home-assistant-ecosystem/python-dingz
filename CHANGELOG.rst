@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.3.0 (--)
-----------
+0.3.0 (2020-11-08)
+------------------
 
 - Add CLI tool
 - Support for shades/blinds (@retoo)
