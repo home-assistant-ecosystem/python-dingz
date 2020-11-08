@@ -136,16 +136,19 @@ class Dingz:
         self._hour_of_day = response["state"]
 
     async def get_state(self) -> None:
+        """Get the state."""
         url = URL(self.uri).join(URL(STATE))
         response = await make_call(self, uri=url)
         self._state = response
 
     async def get_blind_config(self) -> None:
+        """Get the configuration of a dingz blind part."""
         url = URL(self.uri).join(URL(BLIND_CONFIGURATION))
         response = await make_call(self, uri=url)
         self._blind_config = response
 
     async def get_system_config(self) -> None:
+        """Get the system configuration of a dingz."""
         url = URL(self.uri).join(URL(SYSTEM_CONFIG))
         response = await make_call(self, uri=url)
         self._system_config = response
@@ -169,7 +172,8 @@ class Dingz:
         await make_call(self, uri=url, method="POST", data=data)
 
     async def operate_shade(self, shade_no, blind=None, lamella=None) -> None:
-        """operate the lamella and blind
+        """Operate the lamella and blind.
+
         blind: 0 fully closed, 100 fully open
         lamella: 0 lamellas closed, 100 lamellas open
         """
@@ -186,7 +190,7 @@ class Dingz:
 
             if lamella is None:
                 if self.is_shade_opened(shade_no):
-                    # if the shade is currently completely opened (i.e. up), the lamella
+                    # If the shade is currently completely opened (i.e. up), the lamella
                     # value is not really relevant (has no effect). We assume the
                     # lamella value to be 0, ie. closed.
                     # i.e. we set lamella to 45, raise blind to the top, and then back down again
@@ -200,24 +204,31 @@ class Dingz:
         await make_call(self, uri=url, method="POST", parameters=params)
 
     async def shade_up(self, shade_no) -> None:
+        """Move the shade up."""
         await self.shade_command(shade_no, "up")
 
     async def shade_down(self, shade_no) -> None:
+        """Move the shade down."""
         await self.shade_command(shade_no, "down")
 
     async def shade_stop(self, shade_no) -> None:
+        """Stop the shade."""
         await self.shade_command(shade_no, "stop")
 
     async def lamella_open(self, shade_no) -> None:
+        """Open the lamella."""
         await self.operate_shade(shade_no, lamella=100)
 
     async def lamella_close(self, shade_no) -> None:
+        """Close the lamella."""
         await self.operate_shade(shade_no, lamella=0)
 
     async def lamella_stop(self, shade_no) -> None:
+        """Stop the lamella."""
         await self.shade_stop(shade_no)
 
     async def shade_command(self, shade_no, verb):
+        """Create a command for the shade."""
         url = URL(self.uri).join(URL("%s/%s/%s" % (SHADE, shade_no, verb)))
         await make_call(self, uri=url, method="POST")
 
@@ -234,6 +245,7 @@ class Dingz:
 
     @property
     def dingz_name(self) -> str:
+        """Get the name of a dingz."""
         return self._system_config["dingz_name"]
 
     @property
@@ -303,72 +315,91 @@ class Dingz:
 
     @property
     def version(self) -> str:
+        """Return the version of a dingz."""
         return self._info["version"]
 
     @property
     def type(self) -> str:
+        """Return the type of a dingz."""
         return self._info["type"]
 
     @property
     def mac(self) -> str:
+        """Return the MAC address of a dingz."""
         return self._info["mac"]
 
     @property
     def front_hw_model(self) -> str:
+        """Get the hardware model of a dingz."""
         return self._device_details["front_hw_model"]
 
     @property
     def puck_hw_model(self) -> str:
+        """Get the hardware model of a dingz puck."""
         return self._device_details["puck_hw_model"]
 
     @property
-    def front_sn(self) -> str:
+    def front_serial_number(self) -> str:
+        """Get the serial_number of the a dingz front."""
         return self._device_details["front_sn"]
 
     @property
-    def puck_sn(self) -> str:
+    def puck_serial_number(self) -> str:
+        """Get the serial number of a dingz puck."""
         return self._device_details["puck_sn"]
 
     @property
     def hw_version(self) -> str:
+        """Get the hardware version of a dingz."""
         return self._device_details["hw_version"]
 
     @property
     def fw_version(self) -> str:
+        """Get the firmware version of a dingz."""
         return self._device_details["fw_version"]
 
     def _shade_current_state(self, shade_no: int):
+        """Get the configuration of the shade."""
         return self._state["blinds"][shade_no]
 
     def current_blind_level(self, shade_no):
+        """Get the current blind level."""
         return self._shade_current_state(shade_no)["position"]
 
     def current_lamella_level(self, shade_no):
+        """Get the current lamella level."""
         return self._shade_current_state(shade_no)["lamella"]
 
     def is_shade_closed(self, shade_no):
-        # when closed, we care if the lamellas are opened or not
+        """Get the closed state of a shade."""
+        # When closed, we care if the lamellas are opened or not
         return (
             self.current_blind_level(shade_no) == 0
             and self.current_lamella_level(shade_no) == 0
         )
 
     def is_shade_opened(self, shade_no):
+        """Get the open state of a shade."""
         return self.current_blind_level(shade_no) == 100
 
     def is_lamella_closed(self, shade_no):
+        """Get the closed state of a lamella."""
         return self.current_lamella_level(shade_no) == 0
 
     def is_lamella_opened(self, shade_no):
+        """Get the open state of  lamella."""
         return self.current_lamella_level(shade_no) == 100
 
     def is_blind_opening(self, shade_no):
+        """Get the state of the blind if opening."""
         return self._shade_current_state(shade_no)["moving"] == "up"
 
     def is_blind_closing(self, shade_no):
+        """Get the state of the blind if closing."""
         return self._shade_current_state(shade_no)["moving"] == "down"
 
     def blind_name(self, shade_no):
+        """Get the name of the blind."""
         return self._blind_config["blinds"][shade_no]["name"]
 
     # See "Using Asyncio in Python" by Caleb Hattingh for implementation
