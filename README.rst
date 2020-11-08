@@ -35,7 +35,7 @@ You need to have `Python 3 <https://www.python.org>`_ installed.
 - Devices connected to your network
 
 You need to know the IP address of the devices. Please consult your router
-documentation to get this information.
+documentation to get this information or use the `dingz` CLI tool.
 
 Installation
 ------------
@@ -46,10 +46,22 @@ The package is available in the `Python Package Index <https://pypi.python.org/>
 
     $ pip install dingz
 
-Usage
------
+Module usage
+------------
 
-Every unit has its own web interface: `http://IP_ADDRESS <http://IP_ADDRESS>`_
+Every unit has its own web interface: `http://IP_ADDRESS <http://IP_ADDRESS>`_ .
+
+See `example.py` for detail about module.
+
+CLI usage
+---------
+
+The package contains a command-line tool which support some basic tasks.
+
+.. code:: bash
+
+   $ dingz discover
+
 
 License
 -------
