@@ -21,12 +21,15 @@ DEVICE_INFO = "device"
 LIGHT = "light"
 SCHEDULE = "schedule"
 TIMER = "timer"
+SHADE = "shade"
+STATE = "state"
 
 # Special endpoints
 LOG = "/log"
 FIRMWARE = "/load"
 
 SETTINGS = "settings"
+SYSTEM_CONFIG = "system_config"
 FRONT_LED_GET = "led/get"
 FRONT_LED_SET = "led/set"
 BUTTON_ACTIONS = "action"
@@ -34,6 +37,7 @@ WIFI_SCAN = "scan"
 
 # Configuration endpoints
 PIR_CONFIGURATION = "pir_config"
+BLIND_CONFIGURATION = "blind_config"
 THERMOSTAT_CONFIGURATION = "thermostat_config"
 INPUT_CONFIGURATION = "input_config"
 
