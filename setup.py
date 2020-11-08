@@ -23,10 +23,11 @@ setup(
     author="Fabian Affolter",
     author_email="fabian@affolter-engineering.ch",
     license="Apache License 2.0",
-    install_requires=["aiohttp<4", "async_timeout<4"],
+    install_requires=["aiohttp<4", "async_timeout<4", "click"],
     packages=find_packages(),
     zip_safe=True,
     include_package_data=True,
+    entry_points={"console_scripts": ["dingz = dingz.cli:main"]},
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
