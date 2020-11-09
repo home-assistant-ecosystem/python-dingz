@@ -1,4 +1,4 @@
-"""Discover Dingz devices in a network."""
+"""Discover dingz devices in a network."""
 import asyncio
 import logging
 from typing import Optional, List
