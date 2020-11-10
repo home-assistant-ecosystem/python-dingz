@@ -46,6 +46,12 @@ The package is available in the `Python Package Index <https://pypi.python.org/>
 
     $ pip install dingz
 
+On a Fedora-based system or on a CentOS/RHEL machine which has EPEL enabled.
+
+.. code:: bash
+
+    $ sudo dnf -y install python3-dingz
+
 Module usage
 ------------
 
