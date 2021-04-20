@@ -1,6 +1,5 @@
 """Python client/wrapper to interact with dingz devices."""
 import logging
-import json
 import aiohttp
 from yarl import URL
 
