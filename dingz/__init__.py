@@ -1,6 +1,5 @@
 """Base details for the dingz Python bindings."""
 import asyncio
-import json
 import socket
 from typing import Any, Mapping, Optional
 
@@ -8,7 +7,7 @@ import aiohttp
 import async_timeout
 
 from .constants import TIMEOUT, USER_AGENT, CONTENT_TYPE_JSON, CONTENT_TYPE, CONTENT_TYPE_TEXT_PLAIN
-from .exceptions import DingzConnectionError, DingzError
+from .exceptions import DingzConnectionError
 
 
 async def make_call(
