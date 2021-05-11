@@ -38,6 +38,7 @@ WIFI_SCAN = "scan"
 # Configuration endpoints
 PIR_CONFIGURATION = "pir_config"
 BLIND_CONFIGURATION = "blind_config"
+DIMMER_CONFIGURATION = "dimmer_config"
 THERMOSTAT_CONFIGURATION = "thermostat_config"
 INPUT_CONFIGURATION = "input_config"
 

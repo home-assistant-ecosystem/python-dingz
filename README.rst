@@ -59,6 +59,30 @@ Every unit has its own web interface: `http://IP_ADDRESS <http://IP_ADDRESS>`_ .
 
 See `example.py` for detail about module.
 
+
+How to operate shades / dimmers
+-------------------------------
+
+.. code:: python
+
+    d = Dingz("ip_address_or_host")
+    # Fetch config, this has to be done once to fetch all details about the shades/dimmers
+    await d.get_devices_config()
+
+    # Fetch the current state of the lights/vers
+    await d.get_state()
+
+    # Get details about shade
+    shade_0 = d.shades.get(0)
+    print("Blinds: %s Lamella: %s" % (shade_0.current_blind_level(), shade_0.current_lamella_level()))
+
+    # Operate shade
+    shade_0.shade_down()
+
+    # Turn on light
+    d.dimmers.get(2).turn_on(brightness_pct=70)
+
+
 CLI usage
 ---------
 
