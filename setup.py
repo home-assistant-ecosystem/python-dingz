@@ -23,7 +23,7 @@ setup(
     author="Fabian Affolter",
     author_email="fabian@affolter-engineering.ch",
     license="Apache License 2.0",
-    install_requires=["aiohttp<4", "async_timeout<4", "click"],
+    install_requires=["aiohttp<4", "async_timeout<4", "click", "setuptools"],
     packages=find_packages(),
     zip_safe=True,
     include_package_data=True,
