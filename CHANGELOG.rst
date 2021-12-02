@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.4.0 (2021-04-18)
+0.4.0 (2021-12-02)
 ------------------
 
 - Support for dimmers
+- Allos later async_timeout
 - Refactored shades
 
   - With version 0.3.0
