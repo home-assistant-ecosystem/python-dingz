@@ -11,7 +11,7 @@ with open(os.path.join(here, "README.rst"), encoding="utf-8") as readme:
     long_description = readme.read()
 
 setup(
-    name="python-dingz",
+    name="dingz",
     version="0.5.0.dev0",
     description="Python API for interacting with Dingz devices",
     long_description=long_description,
