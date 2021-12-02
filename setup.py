@@ -12,7 +12,7 @@ with open(os.path.join(here, "README.rst"), encoding="utf-8") as readme:
 
 setup(
     name="python-dingz",
-    version="0.4.0.dev1",
+    version="0.4.0",
     description="Python API for interacting with Dingz devices",
     long_description=long_description,
     url="https://github.com/home-assistant-ecosystem/python-dingz",
@@ -21,6 +21,7 @@ setup(
     license="Apache License 2.0",
     install_requires=["aiohttp<4", "async_timeout<5", "click", "setuptools"],
     packages=find_packages(),
+    python_requires='>=3.8',
     zip_safe=True,
     include_package_data=True,
     entry_points={"console_scripts": ["dingz = dingz.cli:main"]},
@@ -32,8 +33,8 @@ setup(
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Utilities",
     ],
 )
