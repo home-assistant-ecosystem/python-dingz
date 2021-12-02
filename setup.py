@@ -11,8 +11,8 @@ with open(os.path.join(here, "README.rst"), encoding="utf-8") as readme:
     long_description = readme.read()
 
 setup(
-    name="python-dingz",
-    version="0.4.0",
+    name="dingz",
+    version="0.5.0",
     description="Python API for interacting with Dingz devices",
     long_description=long_description,
     url="https://github.com/home-assistant-ecosystem/python-dingz",
