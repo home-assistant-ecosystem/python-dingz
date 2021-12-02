@@ -1,6 +1,25 @@
 Changelog
 =========
 
+0.4.0 (2021-12-02)
+------------------
+
+- Support for dimmers
+- Allos later async_timeout
+- Refactored shades
+
+  - With version 0.3.0
+    ::
+
+          dingz.shade_down(shade_id)
+
+  - Starting from 0.4.0:
+    ::
+
+          shade = dingz.shades.get(shade_id)
+          shade.shade_down()
+
+
 0.3.0 (2020-11-08)
 ------------------
 

@@ -1,4 +1,4 @@
-"""Discover Dingz devices in a network."""
+"""Discover dingz devices in a network."""
 import asyncio
 import logging
 from typing import Optional, List
@@ -108,6 +108,6 @@ async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
     devices = registry.devices()
     for device in devices:
         _LOGGER.debug(
-            "Discovered dingz %s (%s) with mac %s", device.host, device.type, device.mac
+            "Discovered dingz %s (%s) (MAC address: %s)", device.host, device.type, device.mac
         )
     return devices

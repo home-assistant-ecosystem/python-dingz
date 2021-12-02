@@ -1,6 +1,6 @@
 """Python client/wrapper to interact with dingz devices."""
 import logging
-import json
+
 import aiohttp
 from yarl import URL
 
@@ -21,12 +21,14 @@ from .constants import (
     WIFI_SCAN,
     TIMER,
     SCHEDULE,
-    SHADE,
     INFO,
     STATE,
     SYSTEM_CONFIG,
     BLIND_CONFIGURATION,
+    DIMMER_CONFIGURATION, SHADE,
 )
+from .dimmer import DimmerRegistry
+from .shade import ShadeRegistry
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -55,7 +57,12 @@ class Dingz:
         self._timer = None
         self._state = {}
         self._blind_config = None
+        self._dimmer_config = None
         self._system_config = None
+        self._devices_config = None
+
+        self._dimmers = DimmerRegistry(dingz=self)
+        self._shades = ShadeRegistry(dingz=self)
 
         self.uri = URL.build(scheme="http", host=self._host).join(URL(API))
 
@@ -135,23 +142,63 @@ class Dingz:
         self._intensity = response["intensity"]
         self._hour_of_day = response["state"]
 
+    def _consume_sensor_state(self, response):
+        self._intensity = response["brightness"]
+        self._hour_of_day = response["light_state"]
+        self._temperature = response["room_temperature"]
+        self._motion = response["person_present"] == 1
+
     async def get_state(self) -> None:
-        """Get the state."""
+        """Fetch the current state and update the different internal representations."""
+
+        # first fetch the device state
         url = URL(self.uri).join(URL(STATE))
-        response = await make_call(self, uri=url)
-        self._state = response
+        device_state = await make_call(self, uri=url)
+        self._consume_sensor_state(device_state['sensors'])
+        self._dimmers._consume_dimmer_state(device_state['dimmers'])
+        self._shades._consume_device_state(device_state['blinds'])
+        self._state = device_state
+
+        if len(self._shades.all()) > 0:
+            # for shades, we want to call shade api as well, as it contains the current positions
+            url = URL(self.uri).join(URL(SHADE))
+            shade_state = await make_call(self, uri=url)
+            self._shades._consume_shade_state(shade_state.values())
 
     async def get_blind_config(self) -> None:
-        """Get the configuration of a dingz blind part."""
+        """Get the configuration of the blinds."""
         url = URL(self.uri).join(URL(BLIND_CONFIGURATION))
         response = await make_call(self, uri=url)
-        self._blind_config = response
+        self._blind_config = response['blinds']
+
+    async def get_dimmer_config(self) -> None:
+        """Get the configuration of the dimmer/lights."""
+        url = URL(self.uri).join(URL(DIMMER_CONFIGURATION))
+        response = await make_call(self, uri=url)
+        self._dimmer_config = response['dimmers']
 
     async def get_system_config(self) -> None:
         """Get the system configuration of a dingz."""
         url = URL(self.uri).join(URL(SYSTEM_CONFIG))
         response = await make_call(self, uri=url)
         self._system_config = response
+
+    async def get_devices_config(self) -> None:
+        """
+        Try to determine the full devices configuration of the device.
+
+        Load the blind/dimmer config. Determine what is attached, and resolve the names.
+        """
+        await self.get_state()
+        await self.get_blind_config()
+        await self.get_dimmer_config()
+
+        # all blinds/dimmers are visible in the device config, regardless of their dip state.
+        # => later in the getter, we correlate the config against the current state and
+        #    can determine if a object is actually in use
+
+        self._shades._consume_config(self._blind_config)
+        self._dimmers._consume_config(self._dimmer_config)
 
     async def enabled(self) -> bool:
         """Return true if front LED is on."""
@@ -171,67 +218,6 @@ class Dingz:
         url = URL(self.uri).join(URL(FRONT_LED_SET))
         await make_call(self, uri=url, method="POST", data=data)
 
-    async def operate_shade(self, shade_no, blind=None, lamella=None) -> None:
-        """Operate the lamella and blind.
-
-        blind: 0 fully closed, 100 fully open
-        lamella: 0 lamellas closed, 100 lamellas open
-        """
-
-        # With newer versions of dingz, we can just leave
-        # either lamella or blind None (i.e. do not chang)
-        # but currently we need to lookup the current state
-        # of the shade first.
-        if blind is None or lamella is None:
-            await self.get_state()
-
-            if blind is None:
-                blind = self.current_blind_level(shade_no)
-
-            if lamella is None:
-                if self.is_shade_opened(shade_no):
-                    # If the shade is currently completely opened (i.e. up), the lamella
-                    # value is not really relevant (has no effect). We assume the
-                    # lamella value to be 0, ie. closed.
-                    # i.e. we set lamella to 45, raise blind to the top, and then back down again
-                    # => de we expect the lamella to be set to 45 again, or does it get resetted to 0?
-                    lamella = 0
-                else:
-                    lamella = self.current_lamella_level(shade_no)
-
-        url = URL(self.uri).join(URL("%s/%s" % (SHADE, shade_no)))
-        params = {"blind": str(blind), "lamella": str(lamella)}
-        await make_call(self, uri=url, method="POST", parameters=params)
-
-    async def shade_up(self, shade_no) -> None:
-        """Move the shade up."""
-        await self.shade_command(shade_no, "up")
-
-    async def shade_down(self, shade_no) -> None:
-        """Move the shade down."""
-        await self.shade_command(shade_no, "down")
-
-    async def shade_stop(self, shade_no) -> None:
-        """Stop the shade."""
-        await self.shade_command(shade_no, "stop")
-
-    async def lamella_open(self, shade_no) -> None:
-        """Open the lamella."""
-        await self.operate_shade(shade_no, lamella=100)
-
-    async def lamella_close(self, shade_no) -> None:
-        """Close the lamella."""
-        await self.operate_shade(shade_no, lamella=0)
-
-    async def lamella_stop(self, shade_no) -> None:
-        """Stop the lamella."""
-        await self.shade_stop(shade_no)
-
-    async def shade_command(self, shade_no, verb):
-        """Create a command for the shade."""
-        url = URL(self.uri).join(URL("%s/%s/%s" % (SHADE, shade_no, verb)))
-        await make_call(self, uri=url, method="POST")
-
     async def set_timer(self, data) -> None:
         """Set a timer."""
         print(data)
@@ -242,6 +228,18 @@ class Dingz:
         """Stop a timer."""
         url = URL(self.uri).join(URL(TIMER))
         await make_call(self, uri=url, method="POST", data=data)
+
+    @property
+    def shades(self) -> ShadeRegistry:
+        """
+        test
+        :return: a ShadeRegistry
+        """
+        return self._shades
+
+    @property
+    def dimmers(self) -> DimmerRegistry:
+        return self._dimmers
 
     @property
     def dingz_name(self) -> str:
@@ -296,7 +294,7 @@ class Dingz:
     @property
     def motion(self) -> bool:
         """Return true if the sensor is detecting motion."""
-        return None
+        return self._motion
 
     @property
     def day(self) -> bool:
@@ -357,50 +355,6 @@ class Dingz:
     def fw_version(self) -> str:
         """Get the firmware version of a dingz."""
         return self._device_details["fw_version"]
-
-    def _shade_current_state(self, shade_no: int):
-        """Get the configuration of the shade."""
-        return self._state["blinds"][shade_no]
-
-    def current_blind_level(self, shade_no):
-        """Get the current blind level."""
-        return self._shade_current_state(shade_no)["position"]
-
-    def current_lamella_level(self, shade_no):
-        """Get the current lamella level."""
-        return self._shade_current_state(shade_no)["lamella"]
-
-    def is_shade_closed(self, shade_no):
-        """Get the closed state of a shade."""
-        # When closed, we care if the lamellas are opened or not
-        return (
-            self.current_blind_level(shade_no) == 0
-            and self.current_lamella_level(shade_no) == 0
-        )
-
-    def is_shade_opened(self, shade_no):
-        """Get the open state of a shade."""
-        return self.current_blind_level(shade_no) == 100
-
-    def is_lamella_closed(self, shade_no):
-        """Get the closed state of a lamella."""
-        return self.current_lamella_level(shade_no) == 0
-
-    def is_lamella_opened(self, shade_no):
-        """Get the open state of  lamella."""
-        return self.current_lamella_level(shade_no) == 100
-
-    def is_blind_opening(self, shade_no):
-        """Get the state of the blind if opening."""
-        return self._shade_current_state(shade_no)["moving"] == "up"
-
-    def is_blind_closing(self, shade_no):
-        """Get the state of the blind if closing."""
-        return self._shade_current_state(shade_no)["moving"] == "down"
-
-    def blind_name(self, shade_no):
-        """Get the name of the blind."""
-        return self._blind_config["blinds"][shade_no]["name"]
 
     # See "Using Asyncio in Python" by Caleb Hattingh for implementation
     # details.
