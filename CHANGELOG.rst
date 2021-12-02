@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0 (2021-12-02)
+------------------
+
+- Rename module from python-dingz to dingz
+
 0.4.0 (2021-12-02)
 ------------------
 
