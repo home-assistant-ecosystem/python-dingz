@@ -52,6 +52,13 @@ On a Fedora-based system or on a CentOS/RHEL machine which has EPEL enabled.
 
     $ sudo dnf -y install python3-dingz
 
+For Nix or NixOS users is a package available. Keep in mind that the lastest releases might only
+be present in the ``unstable`` channel.
+
+.. code:: bash
+
+    $ nix-env -iA nixos.python3Packages.dingz
+
 Module usage
 ------------
 
