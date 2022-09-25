@@ -21,7 +21,7 @@ setup(
     license="Apache License 2.0",
     install_requires=["aiohttp<4", "async_timeout<5", "click", "setuptools"],
     packages=find_packages(),
-    python_requires='>=3.8',
+    python_requires='>=3.9',
     zip_safe=True,
     include_package_data=True,
     entry_points={"console_scripts": ["dingz = dingz.cli:main"]},
@@ -33,8 +33,8 @@ setup(
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Utilities",
     ],
 )
