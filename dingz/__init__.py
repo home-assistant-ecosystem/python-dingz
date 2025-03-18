@@ -4,7 +4,11 @@ import socket
 from typing import Any, Mapping, Optional
 
 import aiohttp
-import async_timeout
+import sys
+if sys.version_info >= (3, 11):
+    import asyncio as async_timeout
+else:
+    import async_timeout
 
 from .constants import TIMEOUT, USER_AGENT, CONTENT_TYPE_JSON, CONTENT_TYPE, CONTENT_TYPE_TEXT_PLAIN
 from .exceptions import DingzConnectionError
