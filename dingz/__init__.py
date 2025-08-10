@@ -38,7 +38,7 @@ async def make_call(
         self._close_session = True
 
     try:
-        with async_timeout.timeout(TIMEOUT):
+        async with async_timeout.timeout(TIMEOUT):
             response = await self._session.request(
                 method, uri, data=data, json=json_data, params=parameters, headers=headers,
             )
