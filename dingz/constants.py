@@ -1,4 +1,5 @@
 """Constants used by the Python API for interacting with dingz units."""
+
 import pkg_resources
 
 try:

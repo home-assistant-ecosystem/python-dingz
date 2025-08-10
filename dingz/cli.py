@@ -1,4 +1,5 @@
 """Command-line interface to interact with dingz devices."""
+
 import asyncio
 from functools import wraps
 

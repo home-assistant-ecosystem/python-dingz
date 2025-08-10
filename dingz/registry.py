@@ -4,7 +4,7 @@ from typing import Generic, TypeVar, List, Dict, Optional
 def organize_by_absolute_index(items):
     result = []
     for item in items:
-        result.append((item['index']['absolute'], item))
+        result.append((item["index"]["absolute"], item))
 
     return result
 
@@ -21,6 +21,7 @@ class BaseRegistry(Generic[T]):
     Note, the absolute index remains the same, regardless of deactivation by the dip switch.
     So shade 1 is always the shade operated by output 2&3, even if it is the only shade.
     """
+
     _registry: Dict[int, T]
 
     def __init__(self, factory):

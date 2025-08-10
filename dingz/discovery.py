@@ -1,4 +1,5 @@
 """Discover dingz devices in a network."""
+
 import asyncio
 import logging
 from typing import Optional, List
@@ -66,7 +67,7 @@ class DiscoveryProtocol(asyncio.DatagramProtocol):
     """Representation of the discovery protocol."""
 
     def __init__(self, registry: DeviceRegistry):
-        """"Initialize the discovery protocol."""
+        """ "Initialize the discovery protocol."""
         super().__init__()
         self.registry = registry
 
@@ -108,6 +109,9 @@ async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
     devices = registry.devices()
     for device in devices:
         _LOGGER.debug(
-            "Discovered dingz %s (%s) (MAC address: %s)", device.host, device.type, device.mac
+            "Discovered dingz %s (%s) (MAC address: %s)",
+            device.host,
+            device.type,
+            device.mac,
         )
     return devices
