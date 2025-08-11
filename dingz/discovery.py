@@ -1,15 +1,16 @@
 """Discover dingz devices in a network."""
 
+from __future__ import annotations
+
 import asyncio
 import logging
-from typing import Optional, List
 
 from .constants import DEVICE_MAPPING
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class DiscoveredDevice(object):
+class DiscoveredDevice:
     """Representation of discovered device."""
 
     mac: str
@@ -24,7 +25,8 @@ class DiscoveredDevice(object):
         """Create announce message."""
         _LOGGER.debug("Received announce message '%s' from %s ", announce_msg, raw_addr)
         if len(announce_msg) != 8:
-            raise RuntimeError("Unexpected announcement, '%s'" % announce_msg)
+            msg = f"Unexpected announcement, '{announce_msg}'"
+            raise RuntimeError(msg)
 
         device = DiscoveredDevice(host=raw_addr[0], mac=announce_msg[0:6].hex(":"))
         device.type = announce_msg[6]
@@ -41,53 +43,53 @@ class DiscoveredDevice(object):
         device.restarted = status & 8 != 0
         return device
 
-    def __init__(self, host, mac):
+    def __init__(self, host, mac) -> None:
         """Initialize the discovery."""
         self.host = host
         self.mac = mac
 
 
-class DeviceRegistry(object):
+class DeviceRegistry:
     """Representation of the device registry."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the device registry."""
         self.devices_by_mac = {}
 
-    def register(self, device):
+    def register(self, device) -> None:
         """Register a device."""
         self.devices_by_mac[device.mac] = device
 
     def devices(self):
-        """Get all present devices"""
+        """Get all present devices."""
         return list(self.devices_by_mac.values())
 
 
 class DiscoveryProtocol(asyncio.DatagramProtocol):
     """Representation of the discovery protocol."""
 
-    def __init__(self, registry: DeviceRegistry):
+    def __init__(self, registry: DeviceRegistry) -> None:
         """ "Initialize the discovery protocol."""
         super().__init__()
         self.registry = registry
 
-    def connection_made(self, transport):
+    def connection_made(self, transport) -> None:
         """Create an UDP listener."""
         _LOGGER.debug("Starting up UDP listener")
         self.transport = transport
 
-    def datagram_received(self, data, addr):
+    def datagram_received(self, data, addr) -> None:
         """Handle a datagram."""
         device = DiscoveredDevice.create_from_announce_msg(addr, data)
         self.registry.register(device)
 
-    def connection_lost(self, exc: Optional[Exception]) -> None:
+    def connection_lost(self, exc: Exception | None) -> None:
         """Stop if connection is lost."""
         _LOGGER.debug("Shutting down UDP listener")
         super().connection_lost(exc)
 
 
-async def discover_dingz_devices(timeout: int = 7) -> List[DiscoveredDevice]:
+async def discover_dingz_devices(timeout: int = 7) -> list[DiscoveredDevice]:
     """
     Try to discover all local dingz instances. All dingz instances
     report their presence every ~5 seconds in an UDP broadcast to port 7979.

@@ -1,4 +1,6 @@
-from typing import Generic, TypeVar, List, Dict, Optional
+from __future__ import annotations
+
+from typing import Generic, TypeVar
 
 
 def organize_by_absolute_index(items):
@@ -22,9 +24,9 @@ class BaseRegistry(Generic[T]):
     So shade 1 is always the shade operated by output 2&3, even if it is the only shade.
     """
 
-    _registry: Dict[int, T]
+    _registry: dict[int, T]
 
-    def __init__(self, factory):
+    def __init__(self, factory) -> None:
         """
         :param factory: call that is being used to create new instances,
                         will be given the key as argument:
@@ -36,7 +38,7 @@ class BaseRegistry(Generic[T]):
         self._registry = {}
         self._factory = factory
 
-    def get(self, absolute_index) -> Optional[T]:
+    def get(self, absolute_index) -> T | None:
         """
         Get object in this registry by absolute_index.
         :param absolute_index: see BaseRegistry class docstring a for a definition of the absolute index
@@ -46,13 +48,10 @@ class BaseRegistry(Generic[T]):
         obj = self._get_or_create(absolute_index)
         if obj.seen_state:
             return obj
-        else:
-            return None
+        return None
 
-    def all(self) -> List[T]:
-        """
-        Return all known dimmers/shades.
-        """
+    def all(self) -> list[T]:
+        """Return all known dimmers/shades."""
         return [o for o in self._registry.values() if o.seen_state]
 
     def _get_or_create(self, absolute_index) -> T:

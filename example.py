@@ -6,20 +6,17 @@ import logging
 from dingz.dingz import Dingz
 from dingz.discovery import discover_dingz_devices
 
-
 IP_ADDRESS = "192.168.0.103"
 
 
-async def main():
+async def main() -> None:
     """Sample code to work with a dingz unit."""
     # Discover dingz devices
     devices = await discover_dingz_devices()
 
     print(f"Found {len(devices)} devices")
     for device in devices:
-        print(
-            f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}"
-        )
+        print(f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}")
 
     # Work with one dingz unit
     async with Dingz(IP_ADDRESS) as dingz:
