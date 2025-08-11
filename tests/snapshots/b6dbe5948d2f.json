@@ -1,0 +1,209 @@
+{
+  "device_hash": "b6dbe5948d2f",
+  "firmware_version": {
+    "value": "2.4.3",
+    "error": null
+  },
+  "device": {
+    "value": {
+      "F008D1C52DA4": {
+        "type": "dingz",
+        "battery": false,
+        "reachable": true,
+        "meshroot": true,
+        "fw_version": "2.4.3",
+        "hw_version": "1.1.2",
+        "fw_version_puck": "2.1.4",
+        "bl_version_puck": "1.0.0",
+        "hw_version_puck": "1.1.1",
+        "hw_id_puck": 1,
+        "puck_sn": "[redacted]",
+        "puck_production_date": {
+          "year": 20,
+          "month": 1,
+          "day": 3
+        },
+        "ddi_base": false,
+        "dip_config": 3,
+        "dip_static": false,
+        "dip_misconf": false,
+        "puck_hw_model": "",
+        "front_hw_model": "dz1f-pir",
+        "front_production_date": "21/3/4",
+        "front_sn": "[redacted]",
+        "front_color": "WH",
+        "has_pir": true,
+        "first_boot": false,
+        "hash": "629b155c"
+      }
+    },
+    "error": null
+  },
+  "network_info": {
+    "value": {
+      "version": "2.4.3",
+      "mac": "[redacted]",
+      "type": 108,
+      "ssid": "[redacted]",
+      "ip": "[redacted]",
+      "mask": "[redacted]",
+      "gw": "[redacted]",
+      "dns": "[redacted]",
+      "static": false,
+      "connected": true
+    },
+    "error": null
+  },
+  "state": {
+    "value": {
+      "dimmers": [
+        {
+          "on": false,
+          "output": 0,
+          "ramp": 0,
+          "readonly": false,
+          "off_timer_type": "none",
+          "off_timer_id": 0,
+          "off_timer_value": 0,
+          "index": {
+            "relative": 0,
+            "absolute": 0
+          }
+        },
+        {
+          "on": false,
+          "output": 0,
+          "ramp": 0,
+          "readonly": false,
+          "off_timer_type": "none",
+          "off_timer_id": 0,
+          "off_timer_value": 0,
+          "index": {
+            "relative": 1,
+            "absolute": 1
+          }
+        },
+        {
+          "on": false,
+          "output": 0,
+          "ramp": 0,
+          "readonly": false,
+          "off_timer_type": "none",
+          "off_timer_id": 0,
+          "off_timer_value": 0,
+          "index": {
+            "relative": 2,
+            "absolute": 2
+          }
+        },
+        {
+          "on": false,
+          "output": 0,
+          "ramp": 0,
+          "readonly": true,
+          "off_timer_type": "none",
+          "off_timer_id": 0,
+          "off_timer_value": 0,
+          "index": {
+            "relative": 3,
+            "absolute": 3
+          }
+        }
+      ],
+      "blinds": [],
+      "ddi_channels": [],
+      "led": {
+        "on": false,
+        "hsv": "0;0;100",
+        "rgb": "FFFFFF",
+        "mode": "hsv",
+        "ramp": 1023,
+        "override_level": 0
+      },
+      "sensors": {
+        "brightness": 0,
+        "light_state": "night",
+        "light_state_lpf": "night",
+        "room_temperature": 23.5,
+        "uncompensated_temperature": 35.9375,
+        "temp_offset": 6,
+        "cpu_temperature": 59.44,
+        "puck_temperature": 64,
+        "fet_temperature": 40.5,
+        "input_state": null,
+        "pirs": [
+          {
+            "enabled": true,
+            "motion": false,
+            "mode": "idle",
+            "light_off_timer": 0,
+            "suspend_timer": 0
+          },
+          {
+            "enabled": true,
+            "motion": false,
+            "mode": "idle",
+            "light_off_timer": 0,
+            "suspend_timer": 0
+          },
+          {
+            "enabled": false,
+            "motion": false,
+            "mode": "idle",
+            "light_off_timer": 0,
+            "suspend_timer": 0
+          }
+        ],
+        "power_outputs": [
+          {
+            "value": 0
+          },
+          {
+            "value": 0
+          },
+          {
+            "value": 0
+          },
+          {
+            "value": 0
+          }
+        ]
+      },
+      "dyn_light": {
+        "mode": "night"
+      },
+      "thermostat": {
+        "active": false,
+        "state": "off",
+        "mode": "off",
+        "user_mode": "comfort",
+        "enabled": false,
+        "target_temp": 22,
+        "min_target_temp": 17,
+        "max_target_temp": 31,
+        "cooling": false,
+        "free_cooling": false,
+        "temp": 23.5
+      },
+      "wifi": {
+        "version": "2.4.3",
+        "mac": "[redacted]",
+        "ssid": "[redacted]",
+        "ip": "[redacted]",
+        "mask": "[redacted]",
+        "gateway": "[redacted]",
+        "dns": "[redacted]",
+        "static": false,
+        "connected": true
+      },
+      "cloud": {
+        "aws": "connected"
+      },
+      "time": "2025-08-12 00:04:59",
+      "config": {
+        "timestamp": 1754592527
+      }
+    },
+    "error": null
+  }
+}
