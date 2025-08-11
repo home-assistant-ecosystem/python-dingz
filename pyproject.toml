@@ -3,6 +3,7 @@ name = "dingz"
 version = "0.6.0.dev0"
 authors = [
     { name = "Fabian Affolter", email = "fabian@affolter-engineering.ch" },
+    { name = "Simon Berger", email = "simon@siku2.io" },
 ]
 description = "Python API for interacting with Dingz devices"
 readme = "README.rst"
