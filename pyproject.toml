@@ -49,10 +49,12 @@ module-root = ""
 [dependency-groups]
 dev = [
     "colorlog>=6.9.0",
-    "eval-type-backport>=0.2.2", # Required by pydantic to support Python 3.9 
+    "eval-type-backport>=0.2.2", # Required by pydantic to support Python 3.9
     "pydantic>=2.11.7",
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
+    "pytest-emoji>=0.2.0",
+    "pytest-md>=0.2.0",
     "ruff>=0.12.8",
 ]
 
