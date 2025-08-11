@@ -3,15 +3,15 @@ python-dingz
 
 Python API for interacting with `Dingz <https://dingz.ch>`_ devices.
 
-This module is not official, developed, supported or endorsed by iolo AG or
-myStrom AG. For questions and other inquiries, use the issue tracker in this
-repository please.
+This module is not official, developed, supported or endorsed by iolo AG.
+For questions and other inquiries, please use the issue tracker in this
+repository.
 
 Without the support of iolo AG and myStrom AG it would have taken much longer
-to create this module which is the base for the integration into
+to create this module, which is the base for the integration into
 `Home Assistant <https://home-assistant.io>`_. Both companies have provided
 and are still providing hardware, valuable feedback and advice. Their
-continuous support make further development of this module possible.
+continuous support makes further development of this module possible.
 
 See `api.dingz.ch <https://api.dingz.ch/>`_ for the API details.
 
@@ -20,7 +20,7 @@ Limitations
 
 This module is at the moment limited to consuming sensor data, device details,
 device configurations and states.
-The front LED can be controlled but buttons requires you to programm them by
+The front LED can be controlled but buttons require you to program them by
 yourself.
 
 No support for setting timers and schedules.
@@ -30,7 +30,7 @@ Requirements
 
 You need to have `Python 3 <https://www.python.org>`_ installed.
 
-- `dingz <https://dingz.ch>`_ device
+- `dingz <https://dingz.ch>`_ device with firmware version 2.4.3 or newer.
 - Network connection
 - Devices connected to your network
 
@@ -52,7 +52,7 @@ On a Fedora-based system or on a CentOS/RHEL machine which has EPEL enabled.
 
     $ sudo dnf -y install python3-dingz
 
-For Nix or NixOS users is a package available. Keep in mind that the lastest releases might only
+For Nix or NixOS users is a package available. Keep in mind that the latest releases might only
 be present in the ``unstable`` channel.
 
 .. code:: bash
