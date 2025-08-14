@@ -264,3 +264,10 @@ class State(TypedDict, total=True):
     cloud: CloudState
     time: str
     config: ConfigState
+
+
+class Ram(TypedDict, total=True):
+    """RAM information returned by the `/api/v1/ram` endpoint."""
+
+    free: int
+    largest_free_block: int

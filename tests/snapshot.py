@@ -10,7 +10,7 @@ from typing_extensions import Self
 if TYPE_CHECKING:
     from collections.abc import Mapping
 
-    from dingz.rest import Device, NetworkInfo, State
+    from dingz.rest import Device, NetworkInfo, Ram, State
 
 __all__ = [
     "Endpoint",
@@ -58,6 +58,7 @@ class Snapshot:
     device: Endpoint[Device]
     network_info: Endpoint[NetworkInfo]
     state: Endpoint[State]
+    ram: Endpoint[Ram]
 
     def endpoint_by_path(self, path: str) -> Endpoint[Any]:
         if path == "/api/v1/device":
@@ -66,6 +67,8 @@ class Snapshot:
             return self.network_info
         if path == "/api/v1/state":
             return self.state
+        if path == "/api/v1/ram":
+            return self.ram
         msg = f"Unknown endpoint path: {path}"
         raise LookupError(msg)
 
@@ -84,6 +87,7 @@ class Snapshot:
             device=Endpoint.from_dict(data["device"]),
             network_info=Endpoint.from_dict(data["network_info"]),
             state=Endpoint.from_dict(data["state"]),
+            ram=Endpoint.from_dict(data["ram"]),
         )
 
 

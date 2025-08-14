@@ -199,5 +199,17 @@
       }
     },
     "error": null
+  },
+  "ram": {
+    "value": {
+      "free": 51848,
+      "diff": -1136,
+      "rtos_free_heap": 51724,
+      "caps_free_heap": 51652,
+      "largest_free_block": 26624,
+      "rtos_min_free_heap": 10484,
+      "caps_min_free_heap": 10484
+    },
+    "error": null
   }
 }

@@ -7,7 +7,7 @@ from typing import Any
 
 from pydantic import TypeAdapter
 
-from dingz.rest import Device, NetworkInfo, RestClient, State
+from dingz.rest import Device, NetworkInfo, Ram, RestClient, State
 
 
 def _validate_strict(ty: Any, value: Any) -> None:
@@ -28,3 +28,8 @@ async def test_network_info(rest_client_with_snapshot: RestClient) -> None:
 async def test_state(rest_client_with_snapshot: RestClient) -> None:
     state = await rest_client_with_snapshot.get_state()
     _validate_strict(State, state)
+
+
+async def test_ram(rest_client_with_snapshot: RestClient) -> None:
+    ram = await rest_client_with_snapshot.get_ram()
+    _validate_strict(Ram, ram)

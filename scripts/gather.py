@@ -158,6 +158,11 @@ async def gather_snapshot(client: RestClient) -> Snapshot:
                 "wifi.dns",
             ],
         ),
+        ram=await gather_endpoint(
+            lambda: client.get_ram(),
+            name="ram",
+            redact_paths=[],
+        ),
     )
 
 

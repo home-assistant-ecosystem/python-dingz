@@ -11,7 +11,7 @@ from dingz.constants import CONTENT_TYPE_JSON, CONTENT_TYPE_TEXT_PLAIN, USER_AGE
 if TYPE_CHECKING:
     from types import TracebackType
 
-    from ._types import Device, NetworkInfo, State
+    from ._types import Device, NetworkInfo, Ram, State
 
 
 class RestClient:
@@ -141,3 +141,7 @@ class RestClient:
         cloud.
         """
         return await self._request("GET", URL("/api/v1/state"))
+
+    async def get_ram(self) -> Ram:
+        """Get RAM information."""
+        return await self._request("GET", URL("/api/v1/ram"))
