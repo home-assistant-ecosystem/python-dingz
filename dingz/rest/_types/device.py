@@ -2,14 +2,20 @@ from __future__ import annotations
 
 from typing_extensions import Literal, NotRequired, TypedDict
 
-# We need to actually import these types for `pydantic.TypeAdapter` to work.
-from .helpers import Date, ShortColorCode  # noqa: TC001
-
 __all__ = [
     "Device",
+    "FrontColorCode",
     "NetworkInfo",
     "Ram",
 ]
+
+FrontColorCode = Literal["WH", "MC"]
+
+
+class _Date(TypedDict):
+    year: int
+    month: int
+    day: int
 
 
 class Device(TypedDict):
@@ -32,7 +38,7 @@ class Device(TypedDict):
     hw_version_puck: str
     hw_id_puck: int
     puck_sn: str
-    puck_production_date: Date
+    puck_production_date: _Date
     ddi_base: bool
     dip_config: int
     dip_static: bool
@@ -59,7 +65,7 @@ class Device(TypedDict):
 
     Can be missing.
     """
-    front_color: ShortColorCode
+    front_color: FrontColorCode
     has_pir: bool
     first_boot: bool
     hash: str

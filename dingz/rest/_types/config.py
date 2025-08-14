@@ -2,9 +2,6 @@ from __future__ import annotations
 
 from typing_extensions import Literal, NotRequired, TypedDict
 
-# We need to actually import these types for `pydantic.TypeAdapter` to work.
-from .helpers import Color  # noqa: TC001
-
 __all__ = [
     "ActionsConfig",
     "BlindConfig",
@@ -122,7 +119,7 @@ class _Motors(TypedDict):
 
 
 class _Feedback(TypedDict):
-    color: Literal["none"] | Color
+    color: Literal["none", "red", "blue", "green", "white"]
     brightness: int
 
 

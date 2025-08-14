@@ -2,9 +2,6 @@ from __future__ import annotations
 
 from typing_extensions import Literal, TypedDict
 
-# We need to actually import these types for `pydantic.TypeAdapter` to work.
-from .helpers import Index  # noqa: TC001
-
 __all__ = [
     "BlindState",
     "CloudState",
@@ -25,6 +22,18 @@ __all__ = [
 LightState = Literal["day", "twilight", "night"]
 
 
+class _Index(TypedDict):
+    """Index information of a dingz sub-component."""
+
+    relative: int
+    """The relative index of dimmer (depending on DIP switch configuration).
+
+    Use this index to refer to component for actions.
+    """
+    absolute: int
+    """The absolute index. Refers to hardware output number."""
+
+
 class DimmerState(TypedDict):
     """Dimmer status part of `State`."""
 
@@ -42,7 +51,7 @@ class DimmerState(TypedDict):
     off_timer_type: Literal["none", "pir"]  # TODO: incomplete
     off_timer_id: int
     off_timer_value: int
-    index: Index
+    index: _Index
 
 
 # TODO CHECK
@@ -55,7 +64,7 @@ class BlindState(TypedDict):
     lamella: int
     """closed = 0, open = 100"""
     readonly: bool
-    index: Index
+    index: _Index
 
 
 # TODO CHECK
