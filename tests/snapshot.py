@@ -10,7 +10,7 @@ from typing_extensions import Self
 if TYPE_CHECKING:
     from collections.abc import Mapping
 
-    from dingz.rest import Device, NetworkInfo, Ram, State
+    from dingz.rest import ConfigDump, Device, NetworkInfo, Ram, State
 
 __all__ = [
     "Endpoint",
@@ -57,6 +57,7 @@ class Snapshot:
     firmware_version: Endpoint[str]
     device: Endpoint[Device]
     network_info: Endpoint[NetworkInfo]
+    config_dump: Endpoint[ConfigDump]
     state: Endpoint[State]
     ram: Endpoint[Ram]
 
@@ -65,6 +66,8 @@ class Snapshot:
             return self.device
         if path == "/api/v1/info":
             return self.network_info
+        if path == "/api/v1/dump_config":
+            return self.config_dump
         if path == "/api/v1/state":
             return self.state
         if path == "/api/v1/ram":
@@ -86,6 +89,7 @@ class Snapshot:
             firmware_version=Endpoint.from_dict(data["firmware_version"]),
             device=Endpoint.from_dict(data["device"]),
             network_info=Endpoint.from_dict(data["network_info"]),
+            config_dump=Endpoint.from_dict(data["config_dump"]),
             state=Endpoint.from_dict(data["state"]),
             ram=Endpoint.from_dict(data["ram"]),
         )

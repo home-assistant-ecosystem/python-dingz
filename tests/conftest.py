@@ -23,7 +23,12 @@ def snapshot(request: pytest.FixtureRequest) -> Snapshot:
 
 @pytest_asyncio.fixture
 async def rest_client_with_snapshot(snapshot: Snapshot) -> AsyncIterator[RestClient]:
-    def side_effect(_method: Literal["GET"], endpoint: URL) -> Any:
+    def side_effect(
+        _method: Literal["GET"],
+        endpoint: URL,
+        *,
+        ignore_content_type: bool = False,
+    ) -> Any:
         endpoint_data = snapshot.endpoint_by_path(endpoint.path)
         if endpoint_data.error is not None:
             msg = "Error mocking is not yet implemented in test framework!"

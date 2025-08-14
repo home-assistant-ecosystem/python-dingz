@@ -2,9 +2,15 @@
 
 from ._client import RestClient
 from ._types import (
+    ButtonConfig,
+    ButtonsConfig,
+    ConfigDump,
+    ConfigState,
     Date,
     Device,
     DynLightState,
+    InputConfig,
+    InputsConfig,
     LedState,
     LightState,
     NetworkInfo,
@@ -18,9 +24,15 @@ from ._types import (
 )
 
 __all__ = [
+    "ButtonConfig",
+    "ButtonsConfig",
+    "ConfigDump",
+    "ConfigState",
     "Date",
     "Device",
     "DynLightState",
+    "InputConfig",
+    "InputsConfig",
     "LedState",
     "LightState",
     "NetworkInfo",

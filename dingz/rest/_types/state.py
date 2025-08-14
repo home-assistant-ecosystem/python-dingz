@@ -1,104 +1,31 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing_extensions import Literal, TypedDict
 
-from typing_extensions import NotRequired, TypedDict
+# We need to actually import these types for `pydantic.TypeAdapter` to work.
+from .helpers import Index  # noqa: TC001
 
-
-class Index(TypedDict, total=True):
-    """Index information of a dingz sub-component."""
-
-    relative: int
-    """The relative index of dimmer (depending on DIP switch configuration).
-
-    Use this index to refer to component for actions.
-    """
-    absolute: int
-    """The absolute index. Refers to hardware output number."""
-
+__all__ = [
+    "BlindState",
+    "CloudState",
+    "ConfigState",
+    "DdiChannelState",
+    "DimmerState",
+    "DynLightState",
+    "LedState",
+    "LightState",
+    "PirSensorState",
+    "PowerOutputSensorState",
+    "SensorsState",
+    "State",
+    "ThermostatState",
+    "WifiState",
+]
 
 LightState = Literal["day", "twilight", "night"]
 
 
-class Date(TypedDict, total=True):
-    """Split date information part of `Device`."""
-
-    year: int
-    month: int
-    day: int
-
-
-class Device(TypedDict, total=True):
-    """Device information returned by the `/api/v1/device` endpoint."""
-
-    type: Literal["dingz"]
-    device_id: str
-    """User-settable identifier of the device.
-
-    This field isn't present in the API model itself. The actual API response is a
-    `dict[str, Device]` with a single entry. The key is the device id.
-    """
-    battery: bool
-    reachable: bool
-    meshroot: bool
-    fw_version: str
-    hw_version: str
-    fw_version_puck: str
-    bl_version_puck: str
-    hw_version_puck: str
-    hw_id_puck: int
-    puck_sn: str
-    puck_production_date: Date
-    ddi_base: bool
-    dip_config: int
-    dip_static: bool
-    dip_misconf: bool
-    puck_hw_model: Literal["DZ1B-4CH", ""]  # TODO: incomplete
-    """Puck hardware model.
-
-    Can be an empty string if unknown.
-    """
-    front_hw_model: NotRequired[Literal["dz1f-pir", "dz1f-4b"]]  # TODO: incomplete
-    """Front hardware model.
-
-    Can be missing.
-    """
-    front_production_date: NotRequired[str]
-    """Front production date.
-
-    Format: `DD/MM/YY`
-
-    Can be missing.
-    """
-    front_sn: NotRequired[str]
-    """Front serial number.
-
-    Can be missing.
-    """
-    front_color: str
-    has_pir: bool
-    first_boot: bool
-    hash: str
-
-
-class NetworkInfo(TypedDict, total=True):
-    """Network information returned by the `/api/v1/info` endpoint."""
-
-    version: str
-    """Version of the front."""
-    mac: str
-    """MAC Address"""
-    type: Literal[108]  # TODO: incomplete?
-    ssid: str
-    ip: str
-    mask: str
-    gw: str
-    dns: str
-    static: bool
-    connected: bool
-
-
-class DimmerState(TypedDict, total=True):
+class DimmerState(TypedDict):
     """Dimmer status part of `State`."""
 
     on: bool
@@ -119,7 +46,7 @@ class DimmerState(TypedDict, total=True):
 
 
 # TODO CHECK
-class BlindState(TypedDict, total=True):
+class BlindState(TypedDict):
     """Blind status part of `State`."""
 
     moving: Literal["up", "down", "stop"]
@@ -132,7 +59,7 @@ class BlindState(TypedDict, total=True):
 
 
 # TODO CHECK
-class DdiChannelState(TypedDict, total=True):
+class DdiChannelState(TypedDict):
     """DDI Channel status part of `State`."""
 
     name: str
@@ -147,7 +74,7 @@ class DdiChannelState(TypedDict, total=True):
     off_timer_value: int
 
 
-class LedState(TypedDict, total=True):
+class LedState(TypedDict):
     """LED status part of `State`."""
 
     on: bool
@@ -164,7 +91,7 @@ class LedState(TypedDict, total=True):
     override_level: int
 
 
-class PirSensorState(TypedDict, total=True):
+class PirSensorState(TypedDict):
     """PIR sensor status part of `SensorsState`."""
 
     enabled: bool
@@ -174,13 +101,13 @@ class PirSensorState(TypedDict, total=True):
     suspend_timer: int
 
 
-class PowerOutputSensorState(TypedDict, total=True):
+class PowerOutputSensorState(TypedDict):
     """Power output sensor status part of `SensorsState`."""
 
     value: float
 
 
-class SensorsState(TypedDict, total=True):
+class SensorsState(TypedDict):
     """Sensors status part of `State`."""
 
     brightness: int
@@ -202,13 +129,13 @@ class SensorsState(TypedDict, total=True):
     power_outputs: list[PowerOutputSensorState]
 
 
-class DynLightState(TypedDict, total=True):
+class DynLightState(TypedDict):
     """Dyn light status part of `State`."""
 
     mode: LightState
 
 
-class ThermostatState(TypedDict, total=True):
+class ThermostatState(TypedDict):
     """Thermostat status part of `State`."""
 
     active: bool
@@ -224,7 +151,7 @@ class ThermostatState(TypedDict, total=True):
     temp: float
 
 
-class WifiState(TypedDict, total=True):
+class WifiState(TypedDict):
     """Wifi status part of `State`."""
 
     version: str
@@ -238,19 +165,19 @@ class WifiState(TypedDict, total=True):
     connected: bool
 
 
-class CloudState(TypedDict, total=True):
+class CloudState(TypedDict):
     """Cloud status part of `State`."""
 
     aws: Literal["connected", "disconnected"]  # TODO: incomplete
 
 
-class ConfigState(TypedDict, total=True):
+class ConfigState(TypedDict):
     """Config status part of `State`."""
 
     timestamp: int
 
 
-class State(TypedDict, total=True):
+class State(TypedDict):
     """Full device status returned by the `/api/v1/state` endpoint."""
 
     dimmers: list[DimmerState]
@@ -264,10 +191,3 @@ class State(TypedDict, total=True):
     cloud: CloudState
     time: str
     config: ConfigState
-
-
-class Ram(TypedDict, total=True):
-    """RAM information returned by the `/api/v1/ram` endpoint."""
-
-    free: int
-    largest_free_block: int

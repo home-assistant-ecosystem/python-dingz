@@ -11,7 +11,22 @@ from dingz.constants import CONTENT_TYPE_JSON, CONTENT_TYPE_TEXT_PLAIN, USER_AGE
 if TYPE_CHECKING:
     from types import TracebackType
 
-    from ._types import Device, NetworkInfo, Ram, State
+    from ._types import (
+        ActionsConfig,
+        ButtonsConfig,
+        ConfigDump,
+        DdiConfig,
+        Device,
+        InputsConfig,
+        LuxConfig,
+        NetworkInfo,
+        OutputsConfig,
+        PirsConfig,
+        Ram,
+        ServicesConfig,
+        State,
+        SystemConfig,
+    )
 
 
 class RestClient:
@@ -78,7 +93,13 @@ class RestClient:
         if self._session_owner:
             await self._session.close()
 
-    async def _request(self, method: Literal["GET"], endpoint: URL) -> Any:  # noqa: ANN401 The return value really could be anything!
+    async def _request(
+        self,
+        method: Literal["GET"],
+        endpoint: URL,
+        *,
+        ignore_content_type: bool = False,
+    ) -> Any:  # noqa: ANN401 The return value really could be anything!
         async with self._session.request(
             method,
             self._base_url.join(endpoint),
@@ -86,7 +107,7 @@ class RestClient:
             timeout=self._timeout,
         ) as resp:
             resp.raise_for_status()
-            return await resp.json()
+            return await resp.json(content_type=None if ignore_content_type else CONTENT_TYPE_JSON)
 
     async def get_firmware_version(self) -> str:
         """Get the firmware version of the dingz device.
@@ -133,6 +154,47 @@ class RestClient:
     async def get_network_info(self) -> NetworkInfo:
         """Get general network settings."""
         return await self._request("GET", URL("/api/v1/info"))
+
+    async def get_button_config(self) -> ButtonsConfig:
+        """Get the button configuration."""
+        return await self._request("GET", URL("/api/v1/button_config"))
+
+    async def get_input_config(self) -> InputsConfig:
+        """Get the input configuration."""
+        return await self._request("GET", URL("/api/v1/input_config"))
+
+    async def get_pir_config(self) -> PirsConfig:
+        """Get the PIR configuration."""
+        return await self._request("GET", URL("/api/v1/pir_config"))
+
+    async def get_lux_config(self) -> LuxConfig:
+        """Get the Lux configuration."""
+        return await self._request("GET", URL("/api/v1/lux_config"))
+
+    async def get_output_config(self) -> OutputsConfig:
+        """Get the output configuration."""
+        return await self._request("GET", URL("/api/v1/output_config"))
+
+    async def get_services_config(self) -> ServicesConfig:
+        """Get the services configuration."""
+        return await self._request("GET", URL("/api/v1/services_config"))
+
+    async def get_system_config(self) -> SystemConfig:
+        """Get the system configuration."""
+        return await self._request("GET", URL("/api/v1/system_config"))
+
+    async def get_ddi_config(self) -> DdiConfig:
+        """Get the DDI configuration."""
+        return await self._request("GET", URL("/api/v1/ddi_config"))
+
+    async def get_actions_config(self) -> ActionsConfig:
+        """Get the actions configuration."""
+        return await self._request("GET", URL("/api/v1/actions"))
+
+    async def get_config_dump(self) -> ConfigDump:
+        """Get the full configuration dump."""
+        # dump_config reports content type application/octet-stream for some reason
+        return await self._request("GET", URL("/api/v1/dump_config"), ignore_content_type=True)
 
     async def get_state(self) -> State:
         """Get the full dingz status.

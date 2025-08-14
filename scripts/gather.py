@@ -146,6 +146,10 @@ async def gather_snapshot(client: RestClient) -> Snapshot:
             name="network_info",
             redact_paths=["mac", "ssid", "ip", "mask", "gw", "dns"],
         ),
+        config_dump=await gather_endpoint(
+            lambda: client.get_config_dump(),
+            name="config_dump",
+        ),
         state=await gather_endpoint(
             lambda: client.get_state(),
             name="state",
