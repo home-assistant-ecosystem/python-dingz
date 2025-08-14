@@ -25,6 +25,7 @@ __all__ = [
     "OutputsConfig",
     "PirConfig",
     "PirsConfig",
+    "SchedulerConfig",
     "ServicesConfig",
     "SystemConfig",
     "ThermostatConfig",
@@ -99,19 +100,19 @@ class _Outputs(TypedDict):
     ddi: _OutputsDdi
 
 
-class _MotorsCustom(TypedDict):
+class _BlindAndLamella(TypedDict):
     blind: int
     lamella: int
 
 
 class _MotorsLocal(TypedDict):
     controlled: bool
-    custom: _MotorsCustom
+    custom: _BlindAndLamella
 
 
 class _MotorsRemote(TypedDict):
     groups: str
-    custom: _MotorsCustom
+    custom: _BlindAndLamella
 
 
 class _Motors(TypedDict):
@@ -641,6 +642,55 @@ class ActionsConfig(TypedDict):
     pir3: _ActionsConfigPir
 
 
+class _SchedulerConfigBcEventsLightsConfigActions(TypedDict):
+    off: bool
+    default_on: bool
+    custom_on: bool
+
+
+class _SchedulerConfigBcEventsLightsConfig(TypedDict):
+    fade_in_time: int
+    fade_out_time: int
+    groups: str
+    custom_value: int
+    actions: _SchedulerConfigBcEventsLightsConfigActions
+
+
+class _SchedulerConfigBcEventsMotorsConfigActions(TypedDict):
+    open: bool
+    close: bool
+    default_pos: bool
+    custom_pos: bool
+
+
+class _SchedulerConfigBcEventsMotorsConfig(TypedDict):
+    groups: str
+    shade_position: _BlindAndLamella
+    actions: _SchedulerConfigBcEventsMotorsConfigActions
+
+
+class _SchedulerConfigBcEvents(TypedDict):
+    remote_type: _LightAndMotor
+    lights_config: _SchedulerConfigBcEventsLightsConfig
+    motors_config: _SchedulerConfigBcEventsMotorsConfig
+
+
+class SchedulerConfig(TypedDict):
+    """Scheduler config returned by the `/api/v1/scheduler` endpoint."""
+
+    id: int
+    name: str
+    en: bool
+    type: Literal["time"]
+    hour: int
+    min: int
+    offset: int
+    rand: int
+    days: str
+    url: str
+    bc_events: _SchedulerConfigBcEvents
+
+
 class ConfigDump(TypedDict):
     """Full config dump returned by the `/api/v1/dump_config` endpoint."""
 
@@ -658,4 +708,4 @@ class ConfigDump(TypedDict):
     ddi_channels: DdiChannelsConfig
     nl: NlConfig
     actions: ActionsConfig
-    # scheduler: list[...]
+    scheduler: list[SchedulerConfig]

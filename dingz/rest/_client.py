@@ -23,6 +23,7 @@ if TYPE_CHECKING:
         OutputsConfig,
         PirsConfig,
         Ram,
+        SchedulerConfig,
         ServicesConfig,
         State,
         SystemConfig,
@@ -190,6 +191,10 @@ class RestClient:
     async def get_actions_config(self) -> ActionsConfig:
         """Get the actions configuration."""
         return await self._request("GET", URL("/api/v1/actions"))
+
+    async def get_scheduler_config(self) -> list[SchedulerConfig]:
+        """Get the scheduler configuration."""
+        return await self._request("GET", URL("/api/v1/scheduler"))
 
     async def get_config_dump(self) -> ConfigDump:
         """Get the full configuration dump."""

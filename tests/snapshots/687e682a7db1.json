@@ -1999,7 +1999,50 @@
           }
         }
       },
-      "scheduler": []
+      "scheduler": [
+        {
+          "id": 1,
+          "name": "test",
+          "en": false,
+          "type": "time",
+          "hour": 0,
+          "min": 0,
+          "offset": 0,
+          "rand": 0,
+          "days": "",
+          "url": "",
+          "bc_events": {
+            "remote_type": {
+              "light": false,
+              "motor": false
+            },
+            "lights_config": {
+              "fade_in_time": 0,
+              "fade_out_time": 0,
+              "groups": "",
+              "custom_value": 100,
+              "actions": {
+                "off": false,
+                "default_on": true,
+                "custom_on": false
+              }
+            },
+            "motors_config": {
+              "groups": "",
+              "shade_position": {
+                "blind": 100,
+                "lamella": 100
+              },
+              "actions": {
+                "open": true,
+                "close": false,
+                "default_pos": false,
+                "custom_pos": false
+              }
+            }
+          }
+        }
+      ]
     },
     "error": null
   },
