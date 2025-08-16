@@ -68,12 +68,25 @@ async def main() -> None:
     if args.host is not None:
         hosts.add(args.host)
 
+    semaphore = asyncio.Semaphore(8)
+
+    tasks: list[asyncio.Task[None]] = []
     for host in hosts:
+        await semaphore.acquire()
+        task = asyncio.create_task(_run_for_host(host, semaphore=semaphore))
+        tasks.append(task)
+    await asyncio.gather(*tasks)
+
+
+async def _run_for_host(host: str, *, semaphore: asyncio.Semaphore) -> None:
+    try:
         async with RestClient(host) as client:
             _LOGGER.info("Gathering data from %s", host)
             snapshot = await gather_snapshot(client)
             _LOGGER.info("Done with %s. Writing to %s", host, snapshot.path())
             snapshot.save()
+    finally:
+        semaphore.release()
 
 
 T = TypeVar("T")
