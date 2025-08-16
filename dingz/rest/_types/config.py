@@ -486,6 +486,8 @@ class SystemConfig(TypedDict):
     dyn_light: _SystemConfigDynLight
     wifi_ps: bool
     new_comp_alg: bool
+    # TODO: there are more fields when the system config is requested through its dedicated API
+    #       compared to the dump config.
 
 
 class DdiConfig(TypedDict):

@@ -17,7 +17,7 @@
         "bl_version_puck": "1.0.0",
         "hw_version_puck": "1.1.1",
         "hw_id_puck": 1,
-        "puck_sn": "[redacted]",
+        "puck_sn": "",
         "puck_production_date": {
           "year": 20,
           "month": 1,
@@ -2163,6 +2163,1741 @@
       "rtos_min_free_heap": 12344,
       "caps_min_free_heap": 12344
     },
+    "error": null
+  },
+  "button_config": {
+    "value": {
+      "dingz_orientation": "1,2,3,4",
+      "buttons": [
+        {
+          "active": true,
+          "name": "Wohnzimmer K\u00fcche",
+          "icon": 1,
+          "mode": {
+            "local": false,
+            "remote": true
+          },
+          "local_type": {
+            "light": false,
+            "motor": false
+          },
+          "type": {
+            "light": true,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": false,
+            "custom_on": true,
+            "open": false,
+            "close": true,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "a",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": true,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          }
+        },
+        {
+          "active": true,
+          "name": "Abwaschen",
+          "icon": 1,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": false
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": false,
+            "custom_on": true,
+            "open": true,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": true,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": true,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          }
+        },
+        {
+          "active": true,
+          "name": "Essen",
+          "icon": 1,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": false
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": false,
+            "custom_on": true,
+            "open": false,
+            "close": true,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": true,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": true,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          }
+        },
+        {
+          "active": true,
+          "name": "K\u00fcche Mitte",
+          "icon": 1,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": false
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": false,
+            "custom_on": true,
+            "open": true,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": true,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": true,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          }
+        }
+      ]
+    },
+    "error": null
+  },
+  "input_config": {
+    "value": {
+      "inputs": [
+        {
+          "active": false,
+          "name": "",
+          "icon": 0,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": true
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": true,
+            "custom_on": false,
+            "open": false,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          },
+          "input": {
+            "type": "button_toggle",
+            "invert": false,
+            "contact_free_cooling": {
+              "repeat_period": 60000
+            }
+          }
+        },
+        {
+          "active": false,
+          "name": "",
+          "icon": 0,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": true
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": true,
+            "custom_on": false,
+            "open": false,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 0,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "button": {
+            "remote_push": false,
+            "therm_ctrl": false
+          },
+          "input": {
+            "type": "button_push",
+            "invert": false,
+            "contact_free_cooling": {
+              "repeat_period": 60000
+            }
+          }
+        }
+      ]
+    },
+    "error": null
+  },
+  "pir_config": {
+    "value": {
+      "pirs": [
+        {
+          "active": true,
+          "name": "Bewegung K\u00fcche",
+          "icon": 0,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": true
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": true,
+            "custom_on": false,
+            "open": false,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 10,
+            "fade_out_time": 10,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 20
+          },
+          "carousel": false,
+          "pir": {
+            "backoff_time": 10,
+            "on_time": 300,
+            "manual_on_time": 600,
+            "manual_off_time": 600
+          }
+        },
+        {
+          "active": true,
+          "name": "",
+          "icon": 0,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": true
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": true,
+            "custom_on": false,
+            "open": false,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 10,
+            "fade_out_time": 10,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "pir": {
+            "backoff_time": 10,
+            "on_time": 180,
+            "manual_on_time": 600,
+            "manual_off_time": 600
+          }
+        },
+        {
+          "active": false,
+          "name": "",
+          "icon": 0,
+          "mode": {
+            "local": true,
+            "remote": false
+          },
+          "local_type": {
+            "light": true,
+            "motor": true
+          },
+          "type": {
+            "light": false,
+            "motor": false
+          },
+          "actions": {
+            "off": true,
+            "default_on": true,
+            "custom_on": false,
+            "open": false,
+            "close": false,
+            "default_pos": false,
+            "custom_pos": false
+          },
+          "ddi_actions": {
+            "brightness": true,
+            "colour_temperature": false
+          },
+          "outputs": {
+            "fade_in_time": 10,
+            "fade_out_time": 0,
+            "auto_off_delay": 0,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "value": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "value": 100,
+                "ct_value": 100
+              }
+            },
+            "ddi": {
+              "controlled": {
+                "active": false,
+                "channel_id": 0
+              },
+              "custom": {
+                "brightness": 100,
+                "colour_temperature": 100
+              }
+            }
+          },
+          "motors": {
+            "invert": false,
+            "local": [
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              },
+              {
+                "controlled": false,
+                "custom": {
+                  "blind": 100,
+                  "lamella": 100
+                }
+              }
+            ],
+            "remote": {
+              "groups": "",
+              "custom": {
+                "blind": 100,
+                "lamella": 100
+              }
+            }
+          },
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "carousel": false,
+          "pir": {
+            "backoff_time": 10,
+            "on_time": 180,
+            "manual_on_time": 7200,
+            "manual_off_time": 5
+          }
+        }
+      ]
+    },
+    "error": null
+  },
+  "lux_config": {
+    "value": {
+      "enabled": true,
+      "output": null,
+      "ddi_channels": null,
+      "feedback": false,
+      "dim_value_night": 100,
+      "dim_value_twilight": 100,
+      "dim_value_day": 100,
+      "ct_value_night": 0,
+      "ct_value_twilight": 0,
+      "ct_value_day": 0,
+      "fade_in_time": 10,
+      "fade_out_time": 10,
+      "thresholds": {
+        "twilight_to_night": 50,
+        "night_to_twilight": 100,
+        "day_to_twilight": 150,
+        "twilight_to_day": 200,
+        "day_to_night": 50,
+        "night_to_day": 200
+      },
+      "light_lpf": true,
+      "off_period": 900
+    },
+    "error": null
+  },
+  "output_config": {
+    "value": {
+      "outputs": [
+        {
+          "active": true,
+          "name": "Essen",
+          "type": "light",
+          "groups": "z",
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "light": {
+            "dimmable": true,
+            "auto_off_delay": 0,
+            "dimmer": {
+              "type": "linear",
+              "use_last_value": false,
+              "range": {
+                "min": 1,
+                "max": 100
+              },
+              "dynamic": {
+                "day": 100,
+                "twilight": 100,
+                "night": 100
+              }
+            },
+            "onoff": {
+              "group_on": {
+                "day": true,
+                "twilight": true,
+                "night": true
+              }
+            }
+          },
+          "heater": {
+            "type": "nc",
+            "function": "heating"
+          },
+          "pulse": {
+            "type": "positive",
+            "length": {
+              "min": 0.2,
+              "max": 0
+            }
+          },
+          "fan": {
+            "delay": {
+              "pre": 180,
+              "post": 5
+            },
+            "ventilation": {
+              "from": {
+                "hour": 7,
+                "minute": 0
+              },
+              "to": {
+                "hour": 21,
+                "minute": 0
+              },
+              "force_in_24": 0
+            },
+            "react": {
+              "pir_during_slot": false,
+              "btn_no_delay": false
+            },
+            "active": true
+          },
+          "garage_door": {
+            "opening_travel_time": 12,
+            "close_timeout": 60,
+            "pulse_time": 1
+          },
+          "valve": {
+            "duration": 60
+          }
+        },
+        {
+          "active": true,
+          "name": "Abwaschen",
+          "type": "light",
+          "groups": "z",
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "light": {
+            "dimmable": false,
+            "auto_off_delay": 0,
+            "dimmer": {
+              "type": "linear",
+              "use_last_value": false,
+              "range": {
+                "min": 1,
+                "max": 100
+              },
+              "dynamic": {
+                "day": 100,
+                "twilight": 100,
+                "night": 100
+              }
+            },
+            "onoff": {
+              "group_on": {
+                "day": false,
+                "twilight": false,
+                "night": false
+              }
+            }
+          },
+          "heater": {
+            "type": "nc",
+            "function": "heating"
+          },
+          "pulse": {
+            "type": "positive",
+            "length": {
+              "min": 0.2,
+              "max": 0
+            }
+          },
+          "fan": {
+            "delay": {
+              "pre": 180,
+              "post": 5
+            },
+            "ventilation": {
+              "from": {
+                "hour": 7,
+                "minute": 0
+              },
+              "to": {
+                "hour": 21,
+                "minute": 0
+              },
+              "force_in_24": 0
+            },
+            "react": {
+              "pir_during_slot": false,
+              "btn_no_delay": false
+            },
+            "active": true
+          },
+          "garage_door": {
+            "opening_travel_time": 12,
+            "close_timeout": 60,
+            "pulse_time": 1
+          },
+          "valve": {
+            "duration": 60
+          }
+        },
+        {
+          "active": true,
+          "name": "K\u00fcche Mitte",
+          "type": "light",
+          "groups": "z",
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "light": {
+            "dimmable": false,
+            "auto_off_delay": 0,
+            "dimmer": {
+              "type": "linear",
+              "use_last_value": false,
+              "range": {
+                "min": 1,
+                "max": 100
+              },
+              "dynamic": {
+                "day": 100,
+                "twilight": 70,
+                "night": 100
+              }
+            },
+            "onoff": {
+              "group_on": {
+                "day": false,
+                "twilight": false,
+                "night": false
+              }
+            }
+          },
+          "heater": {
+            "type": "nc",
+            "function": "heating"
+          },
+          "pulse": {
+            "type": "positive",
+            "length": {
+              "min": 0.2,
+              "max": 0
+            }
+          },
+          "fan": {
+            "delay": {
+              "pre": 180,
+              "post": 5
+            },
+            "ventilation": {
+              "from": {
+                "hour": 7,
+                "minute": 0
+              },
+              "to": {
+                "hour": 21,
+                "minute": 0
+              },
+              "force_in_24": 0
+            },
+            "react": {
+              "pir_during_slot": false,
+              "btn_no_delay": false
+            },
+            "active": true
+          },
+          "garage_door": {
+            "opening_travel_time": 12,
+            "close_timeout": 60,
+            "pulse_time": 1
+          },
+          "valve": {
+            "duration": 60
+          }
+        },
+        {
+          "active": false,
+          "name": "",
+          "type": "light",
+          "groups": "z",
+          "feedback": {
+            "color": "none",
+            "brightness": 100
+          },
+          "light": {
+            "dimmable": false,
+            "auto_off_delay": 0,
+            "dimmer": {
+              "type": "linear",
+              "use_last_value": false,
+              "range": {
+                "min": 1,
+                "max": 100
+              },
+              "dynamic": {
+                "day": 100,
+                "twilight": 100,
+                "night": 100
+              }
+            },
+            "onoff": {
+              "group_on": {
+                "day": false,
+                "twilight": false,
+                "night": false
+              }
+            }
+          },
+          "heater": {
+            "type": "nc",
+            "function": "heating"
+          },
+          "pulse": {
+            "type": "positive",
+            "length": {
+              "min": 0.2,
+              "max": 0
+            }
+          },
+          "fan": {
+            "delay": {
+              "pre": 180,
+              "post": 5
+            },
+            "ventilation": {
+              "from": {
+                "hour": 7,
+                "minute": 0
+              },
+              "to": {
+                "hour": 21,
+                "minute": 0
+              },
+              "force_in_24": 0
+            },
+            "react": {
+              "pir_during_slot": false,
+              "btn_no_delay": false
+            },
+            "active": true
+          },
+          "garage_door": {
+            "opening_travel_time": 12,
+            "close_timeout": 60,
+            "pulse_time": 1
+          },
+          "valve": {
+            "duration": 60
+          }
+        }
+      ]
+    },
+    "error": null
+  },
+  "services_config": {
+    "value": {
+      "mystrom": false,
+      "homekit": false,
+      "rest_api": true,
+      "panel": true,
+      "aws": true,
+      "discovery": false,
+      "udp_search": true,
+      "aws_notifies": false,
+      "ssdp": false,
+      "mdns": true,
+      "mdns_search": true,
+      "homekit_configured": false,
+      "cloud_ping": false,
+      "broadcast_period": 5,
+      "mdns_search_period": 60,
+      "mqtt": {
+        "uri": "[redacted]",
+        "enable": true,
+        "server.crt": null
+      },
+      "cloud_paired": false,
+      "cloud_test_enabled": false
+    },
+    "error": null
+  },
+  "system_config": {
+    "value": {
+      "rest_password": false,
+      "protected_status": false,
+      "allow_reset": true,
+      "allow_wps": true,
+      "allow_reboot": true,
+      "allow_remote_reboot": true,
+      "allow_update": true,
+      "origin": true,
+      "upgrade_blink": true,
+      "reboot_blink": true,
+      "dingz_name": "K\u00fcche",
+      "room_name": "K\u00fcche",
+      "home_name": "",
+      "id": "[redacted]",
+      "temp_offset": 6,
+      "temp_comp": {
+        "fet_offset": 2.64,
+        "gain_up": 0.012,
+        "gain_down": 0.006,
+        "gain_total": 0.25,
+        "idle_offset": 0,
+        "front_offset": 15,
+        "inf_factor": 0.5
+      },
+      "sun_offset": 0,
+      "tzid": 0,
+      "lat": 46.929,
+      "long": 7.118,
+      "dyn_light": {
+        "enable": true,
+        "phases": 3,
+        "source": "lux",
+        "sun_offset": {
+          "day": 30,
+          "twilight": 30,
+          "night": 30
+        }
+      },
+      "wifi_ps": true,
+      "new_comp_alg": false,
+      "time": "2025-08-16 22:20:22",
+      "sunrise": {
+        "hour": 6,
+        "minute": 28
+      },
+      "sunset": {
+        "hour": 20,
+        "minute": 43
+      },
+      "system_status": "OK"
+    },
+    "error": null
+  },
+  "ddi_config": {
+    "value": {
+      "repeat": true,
+      "repeat_interval": 5
+    },
+    "error": null
+  },
+  "actions_config": {
+    "value": {
+      "generic": "",
+      "btn1": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true
+        }
+      },
+      "btn2": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true
+        }
+      },
+      "btn3": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true
+        }
+      },
+      "btn4": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true
+        }
+      },
+      "input": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "active": "",
+        "inactive": "",
+        "active_repeat_period": 0,
+        "inactive_repeat_period": 0,
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true,
+          "active": false,
+          "inactive": false
+        }
+      },
+      "input2": {
+        "single": "",
+        "double": "",
+        "long": "",
+        "m3": "",
+        "m4": "",
+        "m5": "",
+        "begin": "",
+        "hold_up": "",
+        "hold_down": "",
+        "end": "",
+        "off": "",
+        "active": "",
+        "inactive": "",
+        "active_repeat_period": 0,
+        "inactive_repeat_period": 0,
+        "hold_up_repeat_period": 500,
+        "hold_down_repeat_period": 500,
+        "feedback": {
+          "single": true,
+          "double": true,
+          "long": true,
+          "m3": true,
+          "m4": true,
+          "m5": true,
+          "begin": true,
+          "hold_up": true,
+          "hold_down": true,
+          "end": true,
+          "off": true,
+          "active": false,
+          "inactive": false
+        }
+      },
+      "thermostat": {
+        "idle": "",
+        "heating": "",
+        "cooling": "",
+        "repeat_period": 20000
+      },
+      "lux": {
+        "night": "",
+        "twilight": "",
+        "day": "",
+        "repeat_period": 0
+      },
+      "pir1": {
+        "night": "",
+        "twilight": "",
+        "day": "",
+        "rise": "",
+        "fall": "",
+        "timer_off": "",
+        "motion_repeat_period": 0,
+        "feedback": {
+          "night": true,
+          "twilight": true,
+          "day": true,
+          "rise": true,
+          "fall": true,
+          "timer_off": false
+        }
+      },
+      "pir2": {
+        "night": "",
+        "twilight": "",
+        "day": "",
+        "rise": "",
+        "fall": "",
+        "timer_off": "",
+        "motion_repeat_period": 0,
+        "feedback": {
+          "night": true,
+          "twilight": true,
+          "day": true,
+          "rise": true,
+          "fall": true,
+          "timer_off": false
+        }
+      },
+      "pir3": {
+        "night": "",
+        "twilight": "",
+        "day": "",
+        "rise": "",
+        "fall": "",
+        "timer_off": "",
+        "motion_repeat_period": 0,
+        "feedback": {
+          "night": true,
+          "twilight": true,
+          "day": true,
+          "rise": true,
+          "fall": true,
+          "timer_off": false
+        }
+      }
+    },
+    "error": null
+  },
+  "scheduler_config": {
+    "value": [],
     "error": null
   }
 }

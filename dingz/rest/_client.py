@@ -190,7 +190,7 @@ class RestClient:
 
     async def get_actions_config(self) -> ActionsConfig:
         """Get the actions configuration."""
-        return await self._request("GET", URL("/api/v1/actions"))
+        return await self._request("GET", URL("/api/v1/action"))
 
     async def get_scheduler_config(self) -> list[SchedulerConfig]:
         """Get the scheduler configuration."""

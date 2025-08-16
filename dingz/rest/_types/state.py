@@ -105,7 +105,7 @@ class PirSensorState(TypedDict):
 
     enabled: bool
     motion: bool
-    mode: Literal["idle"]  # TODO: INCOMPLETE
+    mode: Literal["auto", "idle"]  # TODO: INCOMPLETE
     light_off_timer: int
     suspend_timer: int
 

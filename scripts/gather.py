@@ -13,20 +13,16 @@ import asyncio
 import dataclasses
 import hashlib
 import logging
-from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Protocol, TypeVar, cast
 
 import dingz.discovery
 from dingz.rest import Device, RestClient
-from tests.snapshot import Endpoint, Error, Snapshot
+from tests.snapshot import REDACTED_VALUE, Endpoint, Error, Snapshot
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Iterable
 
 _LOGGER = logging.getLogger(__name__)
-
-_PROJECT_ROOT = Path(__file__).parent.parent
-_REDACTED_VALUE = "[redacted]"
 
 
 class _Args(Protocol):
@@ -121,7 +117,9 @@ def _redact_path(container: Any, path: str) -> bool:
     key = segments[-1]
     if not (isinstance(container, dict) and key in container):
         return False
-    container[key] = _REDACTED_VALUE
+    # Preserve empty strings
+    if container[key] != "":
+        container[key] = REDACTED_VALUE
     return True
 
 
@@ -162,6 +160,11 @@ async def gather_snapshot(client: RestClient) -> Snapshot:
         config_dump=await gather_endpoint(
             lambda: client.get_config_dump(),
             name="config_dump",
+            redact_paths=[
+                "services.mqtt.uri",
+                "system.id",
+                *[f"actions.{key}" for key in _REDACT_ACTIONS_CONFIG],
+            ],
         ),
         state=await gather_endpoint(
             lambda: client.get_state(),
@@ -180,7 +183,105 @@ async def gather_snapshot(client: RestClient) -> Snapshot:
             name="ram",
             redact_paths=[],
         ),
+        button_config=await gather_endpoint(
+            lambda: client.get_button_config(),
+            name="button_config",
+        ),
+        input_config=await gather_endpoint(
+            lambda: client.get_input_config(),
+            name="input_config",
+        ),
+        pir_config=await gather_endpoint(
+            lambda: client.get_pir_config(),
+            name="pir_config",
+        ),
+        lux_config=await gather_endpoint(
+            lambda: client.get_lux_config(),
+            name="lux_config",
+        ),
+        output_config=await gather_endpoint(
+            lambda: client.get_output_config(),
+            name="output_config",
+        ),
+        services_config=await gather_endpoint(
+            lambda: client.get_services_config(), name="services_config", redact_paths=["mqtt.uri"]
+        ),
+        system_config=await gather_endpoint(
+            lambda: client.get_system_config(),
+            name="system_config",
+            redact_paths=["id"],
+        ),
+        ddi_config=await gather_endpoint(
+            lambda: client.get_ddi_config(),
+            name="ddi_config",
+        ),
+        actions_config=await gather_endpoint(
+            lambda: client.get_actions_config(),
+            name="actions_config",
+            redact_paths=_REDACT_ACTIONS_CONFIG,
+        ),
+        scheduler_config=await gather_endpoint(
+            lambda: client.get_scheduler_config(),
+            name="scheduler_config",
+        ),
     )
+
+
+_REDACT_ACTIONS_CONFIG_BASE = [
+    "single",
+    "double",
+    "long",
+    "m3",
+    "m4",
+    "m5",
+    "begin",
+    "hold_up",
+    "hold_down",
+    "end",
+    "off",
+]
+
+_REDACT_ACTIONS_CONFIG_INPUT = [
+    *_REDACT_ACTIONS_CONFIG_BASE,
+    "active",
+    "inactive",
+]
+
+_REDACT_ACTIONS_CONFIG_THERMOSTAT = [
+    "idle",
+    "heating",
+    "cooling",
+]
+
+_REDACT_ACTIONS_CONFIG_LUX = [
+    "night",
+    "twilight",
+    "day",
+]
+
+_REDACT_ACTIONS_CONFIG_PIR = [
+    "night",
+    "twilight",
+    "day",
+    "rise",
+    "fall",
+    "timer_off",
+]
+
+_REDACT_ACTIONS_CONFIG = [
+    "generic",
+    *[f"btn1.{key}" for key in _REDACT_ACTIONS_CONFIG_BASE],
+    *[f"btn2.{key}" for key in _REDACT_ACTIONS_CONFIG_BASE],
+    *[f"btn3.{key}" for key in _REDACT_ACTIONS_CONFIG_BASE],
+    *[f"btn4.{key}" for key in _REDACT_ACTIONS_CONFIG_BASE],
+    *[f"input.{key}" for key in _REDACT_ACTIONS_CONFIG_INPUT],
+    *[f"input2.{key}" for key in _REDACT_ACTIONS_CONFIG_INPUT],
+    *[f"thermostat.{key}" for key in _REDACT_ACTIONS_CONFIG_THERMOSTAT],
+    *[f"lux.{key}" for key in _REDACT_ACTIONS_CONFIG_LUX],
+    *[f"pir1.{key}" for key in _REDACT_ACTIONS_CONFIG_PIR],
+    *[f"pir2.{key}" for key in _REDACT_ACTIONS_CONFIG_PIR],
+    *[f"pir3.{key}" for key in _REDACT_ACTIONS_CONFIG_PIR],
+]
 
 
 def _generate_device_hash(data: Device) -> str:
