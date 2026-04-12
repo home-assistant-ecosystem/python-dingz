@@ -1,4 +1,5 @@
 """Python client/wrapper to interact with dingz devices."""
+
 import logging
 
 import aiohttp
@@ -25,7 +26,8 @@ from .constants import (
     STATE,
     SYSTEM_CONFIG,
     BLIND_CONFIGURATION,
-    DIMMER_CONFIGURATION, SHADE,
+    DIMMER_CONFIGURATION,
+    SHADE,
 )
 from .dimmer import DimmerRegistry
 from .shade import ShadeRegistry
@@ -154,9 +156,9 @@ class Dingz:
         # first fetch the device state
         url = URL(self.uri).join(URL(STATE))
         device_state = await make_call(self, uri=url)
-        self._consume_sensor_state(device_state['sensors'])
-        self._dimmers._consume_dimmer_state(device_state['dimmers'])
-        self._shades._consume_device_state(device_state['blinds'])
+        self._consume_sensor_state(device_state["sensors"])
+        self._dimmers._consume_dimmer_state(device_state["dimmers"])
+        self._shades._consume_device_state(device_state["blinds"])
         self._state = device_state
 
         if len(self._shades.all()) > 0:
@@ -169,13 +171,13 @@ class Dingz:
         """Get the configuration of the blinds."""
         url = URL(self.uri).join(URL(BLIND_CONFIGURATION))
         response = await make_call(self, uri=url)
-        self._blind_config = response['blinds']
+        self._blind_config = response["blinds"]
 
     async def get_dimmer_config(self) -> None:
         """Get the configuration of the dimmer/lights."""
         url = URL(self.uri).join(URL(DIMMER_CONFIGURATION))
         response = await make_call(self, uri=url)
-        self._dimmer_config = response['dimmers']
+        self._dimmer_config = response["dimmers"]
 
     async def get_system_config(self) -> None:
         """Get the system configuration of a dingz."""

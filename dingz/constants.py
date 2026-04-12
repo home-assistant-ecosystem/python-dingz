@@ -1,8 +1,9 @@
 """Constants used by the Python API for interacting with dingz units."""
-import pkg_resources
+
+import importlib.metadata
 
 try:
-    __version__ = pkg_resources.get_distribution("setuptools").version
+    __version__ = importlib.metadata.version("dingz")
 except Exception:
     __version__ = "unknown"
 

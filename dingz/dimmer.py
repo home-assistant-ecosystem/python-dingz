@@ -27,16 +27,16 @@ class Dimmer(object):
         await self.operate_light(action, brightness_pct)
 
     async def turn_on(self, brightness_pct=100):
-        """ Turn light on.
+        """Turn light on.
         :param brightness_pct: brightness in percent, or None.
         """
         await self.operate_light("on", brightness_pct)
 
     async def turn_off(self):
-        """ Rurn light off."""
+        """Rurn light off."""
         await self.operate_light("off")
 
-    VALID_OPERATIONS = ('on', 'off')
+    VALID_OPERATIONS = ("on", "off")
 
     async def operate_light(self, action, brightness_pct=None):
         """
@@ -46,14 +46,20 @@ class Dimmer(object):
         :return:
         """
         if action not in Dimmer.VALID_OPERATIONS:
-            raise ValueError("invalid action %s, expected one of %s" %
-                             (repr(action), repr(Dimmer.VALID_OPERATIONS)))
+            raise ValueError(
+                "invalid action %s, expected one of %s"
+                % (repr(action), repr(Dimmer.VALID_OPERATIONS))
+            )
 
         if brightness_pct is not None and (brightness_pct > 100 or brightness_pct < 0):
-            raise ValueError("invalid brightness_pct %s, expected value between 0 and 100" %
-                             (repr(brightness_pct)))
+            raise ValueError(
+                "invalid brightness_pct %s, expected value between 0 and 100"
+                % (repr(brightness_pct))
+            )
 
-        url = URL(self.dingz.uri).join(URL("%s/%s/%s" % (DIMMER, self.index_relative, action)))
+        url = URL(self.dingz.uri).join(
+            URL("%s/%s/%s" % (DIMMER, self.index_relative, action))
+        )
         params = {}
         if brightness_pct is not None:
             params["value"] = str(brightness_pct)
@@ -73,18 +79,18 @@ class Dimmer(object):
         :param state_details:
         :return:
         """
-        assert self.absolute_index == state_details['index']['absolute']
+        assert self.absolute_index == state_details["index"]["absolute"]
         self.seen_state = True
-        self.index_relative = state_details['index']['relative']
-        self.on = state_details['on']
-        self.brightness_pct = state_details['output']
+        self.index_relative = state_details["index"]["relative"]
+        self.on = state_details["on"]
+        self.brightness_pct = state_details["output"]
 
     def _consume_config(self, config):
         # "output": "halogen", "name": "Dimmable 3", "feedback": null, "feedback_intensity": 10
-        self.output = config['output']
-        self.enabled = config['output'] != 'not_connected'
-        self.dimmable = config['output'] != 'non_dimmable'
-        self.name = config['name']
+        self.output = config["output"]
+        self.enabled = config["output"] != "not_connected"
+        self.dimmable = config["output"] != "non_dimmable"
+        self.name = config["name"]
 
 
 class DimmerRegistry(BaseRegistry[Dimmer]):

@@ -1,2 +1,0 @@
-# python-dingz requirements. Use setup.py for the dependencies.
-.

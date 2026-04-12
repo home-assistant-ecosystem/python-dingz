@@ -2,9 +2,7 @@ from yarl import URL
 
 from dingz import make_call
 
-from .constants import (
-    SHADE
-)
+from .constants import SHADE
 from .registry import BaseRegistry, organize_by_absolute_index
 
 
@@ -19,7 +17,7 @@ class Shade(object):
         self.lamella = None
 
     def _consume_config(self, config):
-        self.name = config['name']
+        self.name = config["name"]
 
     def _consume_device_state(self, state_details):
         """
@@ -29,12 +27,12 @@ class Shade(object):
               'index': { 'relative': 0, 'absolute': 0 }
         }
         """
-        assert self.absolute_index == state_details['index']['absolute']
-        self.index_relative = state_details['index']['relative']
+        assert self.absolute_index == state_details["index"]["absolute"]
+        self.index_relative = state_details["index"]["relative"]
         self.seen_state = True
-        self.moving = state_details['moving']
-        self.position = state_details['position']
-        self.lamella = state_details['lamella']
+        self.moving = state_details["moving"]
+        self.position = state_details["position"]
+        self.lamella = state_details["lamella"]
 
     def _consume_shade_state(self, state_details):
         """
@@ -48,9 +46,9 @@ class Shade(object):
             "index": { "relative": 1, "absolute": 1 }
         }
         """
-        assert self.absolute_index == state_details['index']['absolute']
-        self.position = state_details['current']['blind']
-        self.lamella = state_details['current']['lamella']
+        assert self.absolute_index == state_details["index"]["absolute"]
+        self.position = state_details["current"]["blind"]
+        self.lamella = state_details["current"]["lamella"]
 
     async def operate_shade(self, blind=None, lamella=None) -> None:
         """
@@ -112,7 +110,9 @@ class Shade(object):
 
     async def shade_command(self, verb):
         """Create a command for the shade."""
-        url = URL(self.dingz.uri).join(URL("%s/%s/%s" % (SHADE, self.absolute_index, verb)))
+        url = URL(self.dingz.uri).join(
+            URL("%s/%s/%s" % (SHADE, self.absolute_index, verb))
+        )
         await make_call(self.dingz, uri=url, method="POST")
 
     def current_blind_level(self):
@@ -126,10 +126,7 @@ class Shade(object):
     def is_shade_closed(self):
         """Get the closed state of a shade."""
         # When closed, we care if the lamellas are opened or not
-        return (
-                self.current_blind_level() == 0
-                and self.current_lamella_level() == 0
-        )
+        return self.current_blind_level() == 0 and self.current_lamella_level() == 0
 
     def is_shade_opened(self):
         """Get the open state of a shade."""

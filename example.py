@@ -1,4 +1,5 @@
 """Sample code to use the wrapper for interacting with the dingz device."""
+
 import asyncio
 import logging
 
@@ -22,7 +23,6 @@ async def main():
 
     # Work with one dingz unit
     async with Dingz(IP_ADDRESS) as dingz:
-
         # Collect the data of the current state
         await dingz.get_device_info()
         print("Device details:", dingz.device_details)
@@ -63,5 +63,4 @@ async def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    asyncio.run(main())
