@@ -8,26 +8,26 @@ from yarl import URL
 from . import make_call
 from .constants import (
     API,
+    BLIND_CONFIGURATION,
     BUTTON_ACTIONS,
     DEVICE_INFO,
+    DIMMER_CONFIGURATION,
     FRONT_LED_GET,
     FRONT_LED_SET,
+    INFO,
     INPUT_CONFIGURATION,
     LIGHT,
     PIR_CONFIGURATION,
     PUCK,
-    SETTINGS,
-    TEMPERATURE,
-    THERMOSTAT_CONFIGURATION,
-    WIFI_SCAN,
-    TIMER,
     SCHEDULE,
-    INFO,
+    SETTINGS,
+    SHADE,
     STATE,
     SYSTEM_CONFIG,
-    BLIND_CONFIGURATION,
-    DIMMER_CONFIGURATION,
-    SHADE,
+    TEMPERATURE,
+    THERMOSTAT_CONFIGURATION,
+    TIMER,
+    WIFI_SCAN,
 )
 from .dimmer import DimmerRegistry
 from .shade import ShadeRegistry
@@ -122,7 +122,7 @@ class Dingz:
             "thermostat": THERMOSTAT_CONFIGURATION,
             "input": INPUT_CONFIGURATION,
         }
-        url_part = [value for key, value in urls.items() if part in key][0]
+        url_part = next(value for key, value in urls.items() if part in key)
         url = URL(self.uri).join(URL(url_part))
         self._configuration = await make_call(self, uri=url)
 
@@ -144,7 +144,7 @@ class Dingz:
         self._intensity = response["intensity"]
         self._hour_of_day = response["state"]
 
-    def _consume_sensor_state(self, response):
+    def _consume_sensor_state(self, response) -> None:
         self._intensity = response["brightness"]
         self._hour_of_day = response["light_state"]
         self._temperature = response["room_temperature"]
@@ -152,7 +152,6 @@ class Dingz:
 
     async def get_state(self) -> None:
         """Fetch the current state and update the different internal representations."""
-
         # first fetch the device state
         url = URL(self.uri).join(URL(STATE))
         device_state = await make_call(self, uri=url)
@@ -222,7 +221,6 @@ class Dingz:
 
     async def set_timer(self, data) -> None:
         """Set a timer."""
-        print(data)
         url = URL(self.uri).join(URL(TIMER))
         await make_call(self, uri=url, method="POST", json_data=data)
 
@@ -234,8 +232,8 @@ class Dingz:
     @property
     def shades(self) -> ShadeRegistry:
         """
-        test
-        :return: a ShadeRegistry
+        Test
+        :return: a ShadeRegistry.
         """
         return self._shades
 
@@ -301,12 +299,12 @@ class Dingz:
     @property
     def day(self) -> bool:
         """Return true if the sensor thinks it's day."""
-        return True if self._hour_of_day == "day" else False
+        return self._hour_of_day == "day"
 
     @property
     def night(self) -> bool:
         """Return true if the sensor thinks it's night."""
-        return True if self._hour_of_day == "night" else False
+        return self._hour_of_day == "night"
 
     @property
     def intensity(self) -> float:

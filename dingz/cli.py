@@ -23,53 +23,47 @@ def coro(f):
 
 @click.group()
 @click.version_option()
-def main():
+def main() -> None:
     """Simple command-line tool to interact with dingz devices."""
 
 
 @main.command("discover")
 @coro
-async def discover():
+async def discover() -> None:
     """Read the current configuration of a myStrom device."""
     click.echo("Waiting for UDP broadcast packages...")
     devices = await discover_dingz_devices()
 
     print(f"Found {len(devices)} devices")
     for device in devices:
-        print(
-            f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}"
-        )
+        print(f"  MAC address: {device.mac}, IP address: {device.host}, HW: {device.hardware}")
 
 
 @main.group("info")
-def info():
+def info() -> None:
     """Get the information of a dingz device."""
 
 
 @info.command("config")
 @coro
-@click.option(
-    "--ip", prompt="IP address of the device", help="IP address of the device."
-)
-async def get_config(ip):
+@click.option("--ip", prompt="IP address of the device", help="IP address of the device.")
+async def get_config(ip) -> None:
     """Read the current configuration of a myStrom device."""
-    click.echo("Read configuration from %s" % ip)
+    click.echo(f"Read configuration from {ip}")
     async with Dingz(ip) as dingz:
         await dingz.get_device_info()
         click.echo(dingz.device_details)
 
 
 @main.group("front_led")
-def front_led():
+def front_led() -> None:
     """Handle the front LED of dingz."""
 
 
 @front_led.command("on")
 @coro
-@click.option(
-    "--ip", prompt="IP address of the device", help="IP address of the device."
-)
-async def set_on(ip):
+@click.option("--ip", prompt="IP address of the device", help="IP address of the device.")
+async def set_on(ip) -> None:
     """Turn the front LED on."""
     async with Dingz(ip) as dingz:
         await dingz.turn_on()
@@ -77,10 +71,8 @@ async def set_on(ip):
 
 @front_led.command("off")
 @coro
-@click.option(
-    "--ip", prompt="IP address of the device", help="IP address of the device."
-)
-async def set_off(ip):
+@click.option("--ip", prompt="IP address of the device", help="IP address of the device.")
+async def set_off(ip) -> None:
     """Turn the front LED off."""
     async with Dingz(ip) as dingz:
         await dingz.turn_off()
@@ -88,10 +80,8 @@ async def set_off(ip):
 
 @front_led.command("status")
 @coro
-@click.option(
-    "--ip", prompt="IP address of the device", help="IP address of the device."
-)
-async def get_status(ip):
+@click.option("--ip", prompt="IP address of the device", help="IP address of the device.")
+async def get_status(ip) -> None:
     """Get the status of the front LED off."""
     async with Dingz(ip) as dingz:
         click.echo(await dingz.enabled())

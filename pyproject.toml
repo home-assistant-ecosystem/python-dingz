@@ -3,6 +3,7 @@ name = "dingz"
 version = "0.6.0.dev0"
 authors = [
     { name = "Fabian Affolter", email = "fabian@affolter-engineering.ch" },
+    { name = "Simon Berger", email = "simon@siku2.io" },
 ]
 description = "Python API for interacting with Dingz devices"
 readme = "README.rst"
@@ -27,6 +28,8 @@ dependencies = [
     "aiohttp<4",
     "async-timeout>=5.0.1 ; python_full_version < '3.11'",
     "click>=8.1.8",
+    "typing-extensions>=4.14.1",
+    "zeroconf>=0.147.0",
 ]
 
 [project.urls]
@@ -45,5 +48,47 @@ module-root = ""
 
 [dependency-groups]
 dev = [
+    "colorlog>=6.9.0",
+    "eval-type-backport>=0.2.2", # Required by pydantic to support Python 3.9
+    "pydantic>=2.11.7",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-emoji>=0.2.0",
+    "pytest-md>=0.2.0",
     "ruff>=0.12.8",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# See: <https://docs.astral.sh/ruff/rules>
+select = ["ALL"]
+ignore = [
+    "D203",   # Use 'no-blank-line-before-class' instead of 'incorrect-blank-line-before-class'
+    "D213",   # Use 'multi-line-summary-second-line' instead of 'multi-line-summary-first-line'
+    "COM812", # Formatter already enforces trailing commas
+    "S101",   # Allow assert
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.per-file-ignores]
+# Special rules for non-library code
+"!dingz/**.py" = [
+    "D",      # Don't need full documentation
+    "T201",   # Allow 'print'
+    "ANN401", # Allow 'Any'
+]
+# Special rules for the cli
+"dingz/cli.py" = [
+    "T201", # Allow 'print' in cli
+]
+# Special rules for tests
+"tests/**.py" = [
+    "SLF001", # Allow access to private members
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

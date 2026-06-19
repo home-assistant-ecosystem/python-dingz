@@ -6,8 +6,8 @@ from .constants import SHADE
 from .registry import BaseRegistry, organize_by_absolute_index
 
 
-class Shade(object):
-    def __init__(self, absolute_index, dingz):
+class Shade:
+    def __init__(self, absolute_index, dingz) -> None:
         self.absolute_index = absolute_index
         self.dingz = dingz
         self.name = None
@@ -16,16 +16,16 @@ class Shade(object):
         self.position = None
         self.lamella = None
 
-    def _consume_config(self, config):
+    def _consume_config(self, config) -> None:
         self.name = config["name"]
 
-    def _consume_device_state(self, state_details):
+    def _consume_device_state(self, state_details) -> None:
         """
         Update internal state based on server respnose.
         Eaxmple for state_details: {
               'moving': 'stop', 'position': 0, 'lamella': 0, 'readonly': False,
               'index': { 'relative': 0, 'absolute': 0 }
-        }
+        }.
         """
         assert self.absolute_index == state_details["index"]["absolute"]
         self.index_relative = state_details["index"]["relative"]
@@ -34,7 +34,7 @@ class Shade(object):
         self.position = state_details["position"]
         self.lamella = state_details["lamella"]
 
-    def _consume_shade_state(self, state_details):
+    def _consume_shade_state(self, state_details) -> None:
         """
         We consume the shade state to get the current position
         of the shade during movement.
@@ -44,7 +44,7 @@ class Shade(object):
             "current": { "blind": 18, "lamella": 100 },
             "disabled": false,
             "index": { "relative": 1, "absolute": 1 }
-        }
+        }.
         """
         assert self.absolute_index == state_details["index"]["absolute"]
         self.position = state_details["current"]["blind"]
@@ -57,13 +57,12 @@ class Shade(object):
         blind: 0 fully closed, 100 fully open
         lamella: 0 lamellas closed, 100 lamellas open
         """
-
         # With newer versions of dingz, we can just leave
         # either lamella or blind None (i.e. do not chang)
         # but currently we need to lookup the current state
         # of the shade first.
         if blind is None or lamella is None:
-            # todo check v1.2
+            # TODO check v1.2
             await self.dingz.get_state()
 
             if blind is None:
@@ -80,7 +79,7 @@ class Shade(object):
                 else:
                     lamella = self.current_lamella_level()
 
-        url = URL(self.dingz.uri).join(URL("%s/%s" % (SHADE, self.absolute_index)))
+        url = URL(self.dingz.uri).join(URL(f"{SHADE}/{self.absolute_index}"))
         params = {"blind": str(blind), "lamella": str(lamella)}
         await make_call(self.dingz, uri=url, method="POST", parameters=params)
 
@@ -108,11 +107,9 @@ class Shade(object):
         """Stop the lamella."""
         await self.shade_stop()
 
-    async def shade_command(self, verb):
+    async def shade_command(self, verb) -> None:
         """Create a command for the shade."""
-        url = URL(self.dingz.uri).join(
-            URL("%s/%s/%s" % (SHADE, self.absolute_index, verb))
-        )
+        url = URL(self.dingz.uri).join(URL(f"{SHADE}/{self.absolute_index}/{verb}"))
         await make_call(self.dingz, uri=url, method="POST")
 
     def current_blind_level(self):
@@ -149,7 +146,7 @@ class Shade(object):
         return self.moving == "down"
 
     def is_moving(self):
-        """Get whether the shade is moving"""
+        """Get whether the shade is moving."""
         return self.is_shade_opening() or self.is_shade_closing()
 
     def shade_name(self, shade_no):
@@ -158,20 +155,20 @@ class Shade(object):
 
 
 class ShadeRegistry(BaseRegistry[Shade]):
-    def __init__(self, dingz):
+    def __init__(self, dingz) -> None:
         super().__init__(factory=lambda absolute_index: Shade(absolute_index, dingz))
 
-    def _consume_config(self, blind_configs):
+    def _consume_config(self, blind_configs) -> None:
         for absolute_index, shade_config in enumerate(blind_configs):
             shade = self._get_or_create(absolute_index)
             shade._consume_config(shade_config)
 
-    def _consume_device_state(self, device_states):
+    def _consume_device_state(self, device_states) -> None:
         for absolute_index, state in organize_by_absolute_index(device_states):
             shade = self._get_or_create(absolute_index)
             shade._consume_device_state(state)
 
-    def _consume_shade_state(self, shade_states):
+    def _consume_shade_state(self, shade_states) -> None:
         for absolute_index, shade_state in organize_by_absolute_index(shade_states):
             shade = self._get_or_create(absolute_index)
             shade._consume_shade_state(shade_state)
